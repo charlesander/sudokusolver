@@ -5,7 +5,7 @@ type individual struct {
 	cellValue int
 }
 
-type individualCell interface {
+type IndividualCell interface {
 	GetCellType() string
 	GetCellValue() int
 	SetCellValue(newValue int)
