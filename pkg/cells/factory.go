@@ -1,7 +1,5 @@
 package cells
 
-import utilties "sudokusolver/pkg/utilites"
-
 type fact struct {
 }
 
@@ -12,16 +10,18 @@ func NewFactory() Factory {
 
 //Service Define the output service interface
 type Factory interface {
-	NewCell(CellType string, CellValue int) IndividualCell
+	NewCell(CellValue int) IndividualCell
 }
 
-func (f fact) NewCell(CellType string, CellValue int) IndividualCell {
-	validCellTypes := []string{"Preset", "Settable"}
-	if !utilties.StringInSlice(CellType, validCellTypes) {
-		panic("Invalid CellType provided")
-	}
+func (f fact) NewCell(CellValue int) IndividualCell {
 	if CellValue < 0 || CellValue > 9 {
 		panic("Invalid CellValue provided")
+	}
+	var CellType string
+	if CellValue == 0 {
+		CellType = "Settable"
+	} else {
+		CellType = "Preset"
 	}
 	return &individual{CellType, CellValue}
 }
