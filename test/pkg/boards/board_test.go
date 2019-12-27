@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/stretchr/testify/assert"
-	"sudokusolver/pkg/boards"
+	board "sudokusolver/pkg/boards"
 	"sudokusolver/pkg/cells"
 	"testing"
 )
@@ -116,5 +116,5 @@ func TestGetCells(t *testing.T) {
 }
 
 func TestCheckComplete(t *testing.T) {
-	t.Skip("Skipped - implement test when function implemented")
+	t.Skip("Skipped - implement TestCheckComplete when function implemented")
 }

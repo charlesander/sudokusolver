@@ -1,8 +1,10 @@
-package board
+package boards
 
 import (
 	"sudokusolver/pkg/cells"
 )
+
+const CELL_COUNT = 81
 
 type boardStruct struct {
 	cellsFactory cells.Factory
@@ -17,7 +19,7 @@ type Board interface {
 
 func NewBoard(cellFactory cells.Factory, initialValues []int) Board {
 
-	if len(initialValues) != 81 {
+	if len(initialValues) != CELL_COUNT {
 		panic("Invalid number of sudoku values provided")
 	}
 
