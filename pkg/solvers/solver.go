@@ -59,7 +59,7 @@ func ExtractHorizontalRow(board boards.Board, index int) []int {
 		start = 72
 		end = 80
 	} else {
-		panic("incorrect index supplied to ExtractHorizonalRow")
+		panic("Incorrect index supplied to ExtractHorizonalRow")
 	}
 
 	for i := start; i <= end; i++ {
@@ -68,8 +68,25 @@ func ExtractHorizontalRow(board boards.Board, index int) []int {
 	return row
 }
 
-func checkVertical(board boards.Board, index int) bool {
+func GetVerticalOffset(index int) int {
+	return index % 9
+}
+
+func CheckVertical(board boards.Board, index int) bool {
+	//col := []int{}
+	//currentOffset := GetVerticalOffset(index)
+	//return col
 	return true
+}
+
+func ExtractVerticalCol(board boards.Board, offset int) []int {
+	col := []int{}
+	i := offset
+	for i <= boards.CELL_COUNT {
+		col = append(col, board.GetCell(i).GetCellValue())
+		i+= 9
+	}
+	return col
 }
 
 func checkSquares(board boards.Board, index int) bool {
