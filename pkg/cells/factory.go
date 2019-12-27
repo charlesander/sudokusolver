@@ -14,14 +14,12 @@ type Factory interface {
 }
 
 func (f fact) NewCell(CellValue int) IndividualCell {
-	if CellValue < 0 || CellValue > 9 {
-		panic("Invalid CellValue provided")
-	}
+	ValidateCellValue(CellValue)
 	var CellType string
 	if CellValue == 0 {
-		CellType = "Settable"
+		CellType = SETTABLE_CELL_TYPE
 	} else {
-		CellType = "Preset"
+		CellType = PRESET_CELL_TYPE
 	}
 	return &individual{CellType, CellValue}
 }
