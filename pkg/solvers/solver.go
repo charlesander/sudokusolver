@@ -7,14 +7,55 @@ import (
 )
 
 func checkValid(board boards.Board, index int) bool {
-	 //check horizontal
-	 //check vertical
-	 //check 3x3 squares
+	//check horizontal
+	//check vertical
+	//check 3x3 squares
 	return true
 }
 
-func checkHorizonal(board boards.Board, index int) bool {
+func checkHorizontal(board boards.Board, index int) bool {
 	return true
+}
+
+func ExtractHorizontalRow(board boards.Board, index int) []int {
+	row := []int{}
+	start := 0
+	end := 0
+	if index <= 8 {
+		start = 0
+		end = 8
+	} else if index <= 17 {
+		start = 9
+		end = 17
+	} else if index <= 26 {
+		start = 18
+		end = 26
+	} else if index <= 35 {
+		start = 27
+		end = 35
+	} else if index <= 44 {
+		start = 36
+		end = 44
+	} else if index <= 53 {
+		start = 45
+		end = 53
+	} else if index <= 62 {
+		start = 54
+		end = 62
+	} else if index <= 71 {
+		start = 63
+		end = 71
+	} else if index <= 80 {
+		start = 72
+		end = 80
+	} else {
+		panic("incorrect index supplied to ExtractHorizonalRow")
+	}
+
+	for i := start; i <= end; i++ {
+		row = append(row, board.GetCell(i).GetCellValue())
+	}
+	return row
 }
 
 func checkVertical(board boards.Board, index int) bool {
@@ -24,7 +65,6 @@ func checkVertical(board boards.Board, index int) bool {
 func checkSquares(board boards.Board, index int) bool {
 	return true
 }
-
 
 func Solve(board boards.Board) boards.Board {
 	fmt.Println(board.GetCell(0).GetCellType())
