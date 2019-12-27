@@ -13,7 +13,21 @@ func TestCheckValid(t *testing.T) {
 }
 
 func TestCheckHorizonal(t *testing.T) {
-	t.Skip("Skipped - implement TestCheckHorizonal when function implemented")
+	var complededSudoku = []int{
+		9,5,7,6,1,3,2,8,4,
+		4,8,3,2,5,7,1,9,6,
+		6,1,2,8,4,9,5,3,7,
+		1,7,8,3,6,4,9,5,2,
+		5,2,4,9,7,1,3,6,8,
+		3,6,9,5,2,8,7,4,1,
+		8,4,5,7,9,2,6,1,3,
+		2,9,1,4,3,6,8,7,5,
+		7,3,6,1,8,5,4,2,9}
+	board := board.NewBoard(cells.NewFactory(), complededSudoku)
+
+	assert.True(t, solvers.CheckHorizontal(board, 0))
+	assert.True(t, solvers.CheckHorizontal(board, 1))
+	//assert.True(t, solvers.CheckHorizontal(board, 12))
 }
 
 func TestExtractHorizontalRow(t *testing.T) {
@@ -95,6 +109,10 @@ func TestExtractHorizontalRow(t *testing.T) {
 
 	extractedRow = solvers.ExtractHorizontalRow(board, 80)
 	assert.Equal(t, expectedRow, extractedRow)
+}
+
+func TestCheckHorizontal(t *testing.T) {
+	t.Skip("Skipped - implement TestCheckVertical when function implemented")
 }
 
 func TestCheckVertical(t *testing.T) {

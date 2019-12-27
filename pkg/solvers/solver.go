@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"sudokusolver/pkg/boards"
 	"sudokusolver/pkg/cells"
+	utilties "sudokusolver/pkg/utilites"
 )
 
 func checkValid(board boards.Board, index int) bool {
@@ -13,7 +14,16 @@ func checkValid(board boards.Board, index int) bool {
 	return true
 }
 
-func checkHorizontal(board boards.Board, index int) bool {
+func CheckHorizontal(board boards.Board, index int) bool {
+	for i := 0; i < boards.CELL_COUNT; i += 9 {
+		if i < index {
+			if !utilties.AreSudokuValuesUnique(ExtractHorizontalRow(board, i)) {
+				return false
+			}
+		} else {
+			break
+		}
+	}
 	return true
 }
 
