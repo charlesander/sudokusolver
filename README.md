@@ -5,4 +5,5 @@ Implemented from the Backtracking technique described here: https://en.wikipedia
 
 **Dependencies**
 
+go get -u github.com/gorilla/mux
 go get github.com/stretchr/testify/assert
