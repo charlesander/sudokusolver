@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestSum(t *testing.T) {
+func TestStringInSlice(t *testing.T) {
 
 	searchItems := []string{"arg1", "€", "驰馳", ""}
 
@@ -18,7 +18,20 @@ func TestSum(t *testing.T) {
 	assert.False(t, utilties.StringInSlice("NotHere", searchItems))
 }
 
-func TestAreValuesUnique(t *testing.T) {
+func TestIntInSlice(t *testing.T) {
+
+	searchItems := []int{0, 1, 1313242523524346, -123123}
+
+	assert.True(t, utilties.IntInSlice(0, searchItems))
+	assert.True(t, utilties.IntInSlice(1, searchItems))
+	assert.True(t, utilties.IntInSlice(1313242523524346, searchItems))
+	assert.True(t, utilties.IntInSlice(-123123, searchItems))
+	assert.False(t, utilties.IntInSlice(98, searchItems))
+	assert.False(t, utilties.IntInSlice(89453843573458, searchItems))
+	assert.False(t, utilties.IntInSlice(-89453843573458, searchItems))
+}
+
+func TestAreSudokuValuesUnique(t *testing.T) {
 	uniqueItems := []int{1,2,3,4,5,6,7,8,9}
 	assert.True(t, utilties.AreSudokuValuesUnique(uniqueItems))
 

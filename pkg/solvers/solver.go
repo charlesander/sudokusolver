@@ -14,6 +14,57 @@ func checkValid(board boards.Board, index int) bool {
 	return true
 }
 
+func CheckNineSquares(board boards.Board, index int) bool {
+	return true
+}
+/**
+ * The sudoku is split into nine squares, each three by three.
+ * If the idex of the cell being checked falls in one of the squares, return
+ * all the values of the cells within the square
+ */
+func ExtractNineSquares(board boards.Board, index int) []int {
+	// These are the indexes of the cells within each square
+	topLeftSquare := []int{0,1,2,9,10,11,18,19,20}
+	topCentreSquare := []int{3,4,5,12,13,14,21,22,23}
+	topRightSquare := []int{6,7,8,15,16,17,24,25,26}
+	middleLeftSquare := []int{27,28,29,36,37,38,45,46,47}
+	middleCentreSquare := []int{30,31,32,39,40,41,48,49,50}
+	middleRightSquare := []int{33,34,35,42,43,44,51,52,53}
+	bottomLeftSquare := []int{54,55,56,63,64,65,72,73,74}
+	bottomCentreSquare := []int{57,58,59,66,67,68,75,76,77}
+	bottomRightSquare := []int{60,61,62,69,70,71,78,79,80}
+
+	if utilties.IntInSlice(index, topLeftSquare) {
+		return getSudokuSquareValues(board, topLeftSquare)
+	} else if utilties.IntInSlice(index, topCentreSquare) {
+		return getSudokuSquareValues(board, topCentreSquare)
+	} else if utilties.IntInSlice(index, topRightSquare) {
+		return getSudokuSquareValues(board, topRightSquare)
+	} else if utilties.IntInSlice(index, middleLeftSquare) {
+		return getSudokuSquareValues(board, middleLeftSquare)
+	} else if utilties.IntInSlice(index, middleCentreSquare) {
+		return getSudokuSquareValues(board, middleCentreSquare)
+	} else if utilties.IntInSlice(index, middleRightSquare) {
+		return getSudokuSquareValues(board, middleRightSquare)
+	} else if utilties.IntInSlice(index, bottomLeftSquare) {
+		return getSudokuSquareValues(board, bottomLeftSquare)
+	} else if utilties.IntInSlice(index, bottomCentreSquare) {
+		return getSudokuSquareValues(board, bottomCentreSquare)
+	} else if utilties.IntInSlice(index, bottomRightSquare) {
+		return getSudokuSquareValues(board, bottomRightSquare)
+	} else {
+		panic("Incorrect index supplied to ExtractNineSquares")
+	}
+}
+
+func getSudokuSquareValues(board boards.Board, squareIndex []int) []int {
+	squareValues := []int{}
+	for _, i := range squareIndex {
+		squareValues = append(squareValues, board.GetCell(i).GetCellValue())
+	}
+	return squareValues
+}
+
 func CheckHorizontal(board boards.Board, index int) bool {
 	for i := 0; i < boards.CELL_COUNT; i += 9 {
 		if i <= index {
