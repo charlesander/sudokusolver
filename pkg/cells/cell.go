@@ -24,7 +24,7 @@ func (p individual) GetCellValue() int {
 	return p.cellValue
 }
 
-func (p individual) SetCellValue(newValue int) {
+func (p *individual) SetCellValue(newValue int) {
 	p.cellValue = newValue
 }
 

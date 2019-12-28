@@ -8,15 +8,16 @@ import (
 )
 
 func checkValid(board boards.Board, index int) bool {
-	//CheckHorizontal(board, index)
-	//CheckVertical(board, index)
-	//check 3x3 squares
-	return true
+	return CheckHorizontal(board, index) &&
+		CheckVertical(board, index) &&
+		CheckNineSquares(board, index)
+
 }
 
 func CheckNineSquares(board boards.Board, index int) bool {
-	return true
+	return utilties.AreSudokuValuesUnique(ExtractNineSquares(board, index))
 }
+
 /**
  * The sudoku is split into nine squares, each three by three.
  * If the idex of the cell being checked falls in one of the squares, return
@@ -29,15 +30,15 @@ func ExtractNineSquares(board boards.Board, index int) []int {
 
 func GetSudokuSquareIndexes(board boards.Board, index int) []int {
 	// These are the indexes of the cells within each square
-	topLeftSquare := []int{0,1,2,9,10,11,18,19,20}
-	topCentreSquare := []int{3,4,5,12,13,14,21,22,23}
-	topRightSquare := []int{6,7,8,15,16,17,24,25,26}
-	middleLeftSquare := []int{27,28,29,36,37,38,45,46,47}
-	middleCentreSquare := []int{30,31,32,39,40,41,48,49,50}
-	middleRightSquare := []int{33,34,35,42,43,44,51,52,53}
-	bottomLeftSquare := []int{54,55,56,63,64,65,72,73,74}
-	bottomCentreSquare := []int{57,58,59,66,67,68,75,76,77}
-	bottomRightSquare := []int{60,61,62,69,70,71,78,79,80}
+	topLeftSquare := []int{0, 1, 2, 9, 10, 11, 18, 19, 20}
+	topCentreSquare := []int{3, 4, 5, 12, 13, 14, 21, 22, 23}
+	topRightSquare := []int{6, 7, 8, 15, 16, 17, 24, 25, 26}
+	middleLeftSquare := []int{27, 28, 29, 36, 37, 38, 45, 46, 47}
+	middleCentreSquare := []int{30, 31, 32, 39, 40, 41, 48, 49, 50}
+	middleRightSquare := []int{33, 34, 35, 42, 43, 44, 51, 52, 53}
+	bottomLeftSquare := []int{54, 55, 56, 63, 64, 65, 72, 73, 74}
+	bottomCentreSquare := []int{57, 58, 59, 66, 67, 68, 75, 76, 77}
+	bottomRightSquare := []int{60, 61, 62, 69, 70, 71, 78, 79, 80}
 
 	if utilties.IntInSlice(index, topLeftSquare) {
 		return topLeftSquare
@@ -168,7 +169,38 @@ func Solve(board boards.Board) boards.Board {
 	i := 0
 	for i < boards.CELL_COUNT {
 		fmt.Print(i, ",")
-		checkValid(board, i)
+		if board.GetCell(i).GetCellType() == cells.PRESET_CELL_TYPE {
+			//skip over preset cells (they're not setable)
+			i++
+			continue
+		} else if board.GetCell(i).GetCellValue() == cells.MAX_CELL_VALUE {
+			//We've tried all the valid values for this cell, time to backtrack
+			board.GetCell(i).SetCellValue(0)
+			for {
+				i--
+				if board.GetCell(i).GetCellType() == cells.SETTABLE_CELL_TYPE {
+					continue
+				}
+			}
+		} else {
+
+			if board.GetCell(i).GetCellValue() == 0 {
+				board.GetCell(i).SetCellValue(1)
+			} else if checkValid(board, i) {
+				i++
+			} else {
+				board.GetCell(i).SetCellValue(board.GetCell(i).GetCellValue() + 1)
+			}
+		}
+	}
+
+	return board
+}
+	/*
+		if (checkValid(board, i)) {
+			i++
+			continue
+		}
 		if board.GetCell(i).GetCellType() == cells.PRESET_CELL_TYPE {
 			//skip over preset cells (they're not setable)
 			i++
@@ -187,7 +219,4 @@ func Solve(board boards.Board) boards.Board {
 			i++
 		}
 		//Otherwise
-	}
-
-	return board
-}
+	*/

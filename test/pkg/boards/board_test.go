@@ -58,9 +58,20 @@ func TestSettingCell(t *testing.T) {
 
 	//Correctly set a cell value for the settable cell
 	board.SetCellValue(0, 1)
-	assert.Equal(t, board.GetCell(0).GetCellValue(), 0)
+	assert.Equal(t, board.GetCell(0).GetCellValue(), 1)
 	assert.Equal(t, board.GetCell(0).GetCellType(), "Settable")
 
+	board.SetCellValue(0, 2)
+	assert.Equal(t, board.GetCell(0).GetCellValue(), 2)
+
+	board.SetCellValue(0, 3)
+	assert.Equal(t, board.GetCell(0).GetCellValue(), 3)
+
+	board.SetCellValue(0, 5)
+	assert.Equal(t, board.GetCell(0).GetCellValue(), 5)
+
+	board.SetCellValue(0, 9)
+	assert.Equal(t, board.GetCell(0).GetCellValue(), 9)
 	//Fail setting a cell value for a settable cell
 
 	assert.Panics(t, func() {

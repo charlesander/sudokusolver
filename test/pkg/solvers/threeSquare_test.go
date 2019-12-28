@@ -8,8 +8,127 @@ import (
 	"testing"
 )
 
-func TestCheckNineSquares(t *testing.T) {
-	t.Skip("Skipped - implement TestCheckNineSquares when function implemented")
+func TestCheckNineSquaresAllCorrectCells(t *testing.T) {
+	var complededSudoku = []int{
+		9,5,7,6,1,3,2,8,4,
+		4,8,3,2,5,7,1,9,6,
+		6,1,2,8,4,9,5,3,7,
+		1,7,8,3,6,4,9,5,2,
+		5,2,4,9,7,1,3,6,8,
+		3,6,9,5,2,8,7,4,1,
+		8,4,5,7,9,2,6,1,3,
+		2,9,1,4,3,6,8,7,5,
+		7,3,6,1,8,5,4,2,9}
+	board := boards.NewBoard(cells.NewFactory(), complededSudoku)
+
+	assert.True(t, solvers.CheckNineSquares(board, 0))
+	assert.True(t, solvers.CheckNineSquares(board, 1))
+	assert.True(t, solvers.CheckNineSquares(board, 2))
+	assert.True(t, solvers.CheckNineSquares(board, 3))
+	assert.True(t, solvers.CheckNineSquares(board, 4))
+	assert.True(t, solvers.CheckNineSquares(board, 5))
+	assert.True(t, solvers.CheckNineSquares(board, 6))
+	assert.True(t, solvers.CheckNineSquares(board, 7))
+	assert.True(t, solvers.CheckNineSquares(board, 8))
+	assert.True(t, solvers.CheckNineSquares(board, 9))
+	assert.True(t, solvers.CheckNineSquares(board, 10))
+	assert.True(t, solvers.CheckNineSquares(board, 20))
+	assert.True(t, solvers.CheckNineSquares(board, 30))
+	assert.True(t, solvers.CheckNineSquares(board, 40))
+	assert.True(t, solvers.CheckNineSquares(board, 50))
+	assert.True(t, solvers.CheckNineSquares(board, 60))
+	assert.True(t, solvers.CheckNineSquares(board, 70))
+	assert.True(t, solvers.CheckNineSquares(board, 80))
+
+	// Out of expected range error
+	assert.Panics(t, func() {
+		solvers.ExtractNineSquares(board, 81)
+	})
+	assert.Panics(t, func() {
+		solvers.ExtractNineSquares(board, -1)
+	})
+}
+
+func TestCheckNineSquaresDuplicateBottomRight(t *testing.T) {
+	var complededSudoku = []int{
+		9,5,7,6,1,3,2,8,4,
+		4,8,3,2,5,7,1,9,6,
+		6,1,2,8,4,9,5,3,7,
+		1,7,8,3,6,4,9,5,2,
+		5,2,4,9,7,1,3,6,8,
+		3,6,9,5,2,8,7,4,1,
+		8,4,5,7,9,2,6,1,3,
+		2,9,1,4,3,6,8,2,5,
+		7,3,6,1,8,5,4,2,9}
+	board := boards.NewBoard(cells.NewFactory(), complededSudoku)
+
+	assert.True(t, solvers.CheckNineSquares(board, 0))
+	assert.True(t, solvers.CheckNineSquares(board, 1))
+	assert.True(t, solvers.CheckNineSquares(board, 2))
+	assert.True(t, solvers.CheckNineSquares(board, 3))
+	assert.True(t, solvers.CheckNineSquares(board, 4))
+	assert.True(t, solvers.CheckNineSquares(board, 5))
+	assert.True(t, solvers.CheckNineSquares(board, 6))
+	assert.True(t, solvers.CheckNineSquares(board, 7))
+	assert.True(t, solvers.CheckNineSquares(board, 8))
+	assert.True(t, solvers.CheckNineSquares(board, 9))
+	assert.True(t, solvers.CheckNineSquares(board, 10))
+	assert.True(t, solvers.CheckNineSquares(board, 20))
+	assert.True(t, solvers.CheckNineSquares(board, 30))
+	assert.True(t, solvers.CheckNineSquares(board, 40))
+	assert.True(t, solvers.CheckNineSquares(board, 50))
+	assert.False(t, solvers.CheckNineSquares(board, 60))
+	assert.False(t, solvers.CheckNineSquares(board, 70))
+	assert.False(t, solvers.CheckNineSquares(board, 80))
+
+	// Out of expected range error
+	assert.Panics(t, func() {
+		solvers.CheckNineSquares(board, 81)
+	})
+	assert.Panics(t, func() {
+		solvers.CheckNineSquares(board, -1)
+	})
+}
+
+func TestCheckNineSquaresDuplicateTopRight(t *testing.T) {
+	var complededSudoku = []int{
+		9,5,7,6,1,3,2,8,4,
+		4,8,3,2,5,7,1,9,6,
+		6,8,2,8,4,9,5,3,7,
+		1,7,8,3,6,4,9,5,2,
+		5,2,4,9,7,1,3,6,8,
+		3,6,9,5,2,8,7,4,1,
+		8,4,5,7,9,2,6,1,3,
+		2,9,1,4,3,6,8,7,5,
+		7,3,6,1,8,5,4,2,9}
+	board := boards.NewBoard(cells.NewFactory(), complededSudoku)
+
+	assert.False(t, solvers.CheckNineSquares(board, 0))
+	assert.False(t, solvers.CheckNineSquares(board, 1))
+	assert.False(t, solvers.CheckNineSquares(board, 2))
+	assert.True(t, solvers.CheckNineSquares(board, 3))
+	assert.True(t, solvers.CheckNineSquares(board, 4))
+	assert.True(t, solvers.CheckNineSquares(board, 5))
+	assert.True(t, solvers.CheckNineSquares(board, 6))
+	assert.True(t, solvers.CheckNineSquares(board, 7))
+	assert.True(t, solvers.CheckNineSquares(board, 8))
+	assert.False(t, solvers.CheckNineSquares(board, 9))
+	assert.False(t, solvers.CheckNineSquares(board, 10))
+	assert.False(t, solvers.CheckNineSquares(board, 20))
+	assert.True(t, solvers.CheckNineSquares(board, 30))
+	assert.True(t, solvers.CheckNineSquares(board, 40))
+	assert.True(t, solvers.CheckNineSquares(board, 50))
+	assert.True(t, solvers.CheckNineSquares(board, 60))
+	assert.True(t, solvers.CheckNineSquares(board, 70))
+	assert.True(t, solvers.CheckNineSquares(board, 80))
+
+	// Out of expected range error
+	assert.Panics(t, func() {
+		solvers.ExtractNineSquares(board, 81)
+	})
+	assert.Panics(t, func() {
+		solvers.ExtractNineSquares(board, -1)
+	})
 }
 
 func TestGetSudokuSquareIndexes(t *testing.T) {

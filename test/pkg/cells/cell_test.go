@@ -21,6 +21,13 @@ func TestCellInitiation(t *testing.T) {
 	assert.Equal(t, cell3.GetCellValue(), 0)
 }
 
+func TestSetCellValue(t *testing.T) {
+	cellFactory := cells.NewFactory()
+	cell := cellFactory.NewCell( 1);
+	cell.SetCellValue(2)
+	assert.Equal(t, cell.GetCellValue(), 2)
+}
+
 func TestCellInitiationWithInvalidData(t *testing.T) {
 	cellFactory := cells.NewFactory()
 

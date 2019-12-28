@@ -27,14 +27,14 @@ func NewBoard(cellFactory cells.Factory, initialValues []int) Board {
 	for _, initialValue := range initialValues {
 		board.cells = append(board.cells, board.cellsFactory.NewCell(initialValue))
 	}
-	return board
+	return &board
 }
 
 func (b boardStruct) GetCell(index int) cells.IndividualCell {
 	return b.cells[index]
 }
 
-func (b boardStruct) SetCellValue(index int, newValue int) {
+func (b *boardStruct) SetCellValue(index int, newValue int) {
 	cells.ValidateCellValue(newValue)
 	if(b.GetCell(index).GetCellType() == cells.SETTABLE_CELL_TYPE) {
 		b.cells[index].SetCellValue(newValue)
