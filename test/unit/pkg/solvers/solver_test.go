@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-func TestCheckBoardIsSolvable(t *testing.T) {
+func TestCheckBoardHasValidLayout(t *testing.T) {
 	var easySudoku = []int{
 		0, 0, 3, 0, 2, 0, 6, 0, 0,
 		9, 0, 0, 3, 0, 5, 0, 0, 1,
@@ -23,7 +23,7 @@ func TestCheckBoardIsSolvable(t *testing.T) {
 		0, 0, 5, 0, 1, 0, 3, 0, 0,
 	}
 	board := boards.NewBoard(cells.NewFactory(), easySudoku)
-	assert.True(t, solvers.CheckBoardIsSolvable(board))
+	assert.True(t, solvers.CheckBoardHasValidLayout(board))
 
 	var brokenSudoku = []int{
 		0, 0, 3, 0, 2, 0, 6, 0, 0,
@@ -39,7 +39,7 @@ func TestCheckBoardIsSolvable(t *testing.T) {
 		0, 0, 5, 0, 1, 0, 3, 0, 0,
 	}
 	brokenBoard := boards.NewBoard(cells.NewFactory(), brokenSudoku)
-	assert.False(t, solvers.CheckBoardIsSolvable(brokenBoard))
+	assert.False(t, solvers.CheckBoardHasValidLayout(brokenBoard))
 
 	var hardSudoku2 = []int{
 		6, 0, 0, 0, 0, 0, 1, 5, 0,
@@ -55,7 +55,7 @@ func TestCheckBoardIsSolvable(t *testing.T) {
 		0, 4, 9, 0, 0, 0, 0, 9, 5,
 	}
 	brokenBoard2 := boards.NewBoard(cells.NewFactory(), hardSudoku2)
-	assert.False(t, solvers.CheckBoardIsSolvable(brokenBoard2))
+	assert.False(t, solvers.CheckBoardHasValidLayout(brokenBoard2))
 }
 func TestCheckValidWithDuplicate(t *testing.T) {
 	var easySudoku = []int{

@@ -16,7 +16,7 @@ import (
  * them in order to make the sudoku solvable. Checking the board with
  * this function can avert that scenario.
  */
-func CheckBoardIsSolvable(board boards.Board) bool {
+func CheckBoardHasValidLayout(board boards.Board) bool {
 	for i := 0; i < boards.CELL_COUNT; i++ {
 		if !CheckValid(board, i) {
 			return false
@@ -182,7 +182,7 @@ func checkSquares(board boards.Board, index int) bool {
 }
 
 func Solve(board boards.Board) boards.Board {
-	if !CheckBoardIsSolvable(board) {
+	if !CheckBoardHasValidLayout(board) {
 		panic("Unsolvable board provided")
 	}
 	i := 0
