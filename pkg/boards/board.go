@@ -5,10 +5,10 @@ import (
 )
 
 const CELL_COUNT = 81
-const BOARD_SIDE_LENGTH = 9;
+const BOARD_SIDE_LENGTH = 9
 
 type boardStruct struct {
-	complete bool
+	complete     bool
 	cellsFactory cells.Factory
 	cells        []cells.IndividualCell
 }
@@ -34,12 +34,15 @@ func NewBoard(cellFactory cells.Factory, initialValues []int) Board {
 }
 
 func (b boardStruct) GetCell(index int) cells.IndividualCell {
+	if index < 0 || index > CELL_COUNT {
+		panic("Invalid index used in GetCell()")
+	}
 	return b.cells[index]
 }
 
 func (b *boardStruct) SetCellValue(index int, newValue int) {
 	cells.ValidateCellValue(newValue)
-	if(b.GetCell(index).GetCellType() == cells.SETTABLE_CELL_TYPE) {
+	if b.GetCell(index).GetCellType() == cells.SETTABLE_CELL_TYPE {
 		b.cells[index].SetCellValue(newValue)
 	} else {
 		panic("Attempting to set a value to a cell that already has a preset value")

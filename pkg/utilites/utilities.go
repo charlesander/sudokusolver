@@ -1,6 +1,26 @@
 package utilties
 
-import "sort"
+import (
+	"log"
+	"sort"
+	"strconv"
+	"strings"
+)
+
+func ExplodeToIntSlice(sudokuCellValues string) []int {
+	tmp := strings.Split(sudokuCellValues, ",")
+	values := make([]int, 0, len(tmp))
+	for _, raw := range tmp {
+		v, err := strconv.Atoi(raw)
+		if err != nil {
+			log.Print(err)
+			continue
+		}
+		values = append(values, v)
+	}
+
+	return values
+}
 
 func StringInSlice(a string, list []string) bool {
 	for _, b := range list {

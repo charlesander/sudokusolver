@@ -186,6 +186,7 @@ func Solve(board boards.Board) boards.Board {
 		panic("Unsolvable board provided")
 	}
 	i := 0
+	count := 0
 	for i < boards.CELL_COUNT {
 		if board.GetCell(i).GetCellType() == cells.PRESET_CELL_TYPE {
 			//skip over preset cells (they're not set-able)
@@ -210,6 +211,10 @@ func Solve(board boards.Board) boards.Board {
 			}
 		} else {
 			board.GetCell(i).SetCellValue(board.GetCell(i).GetCellValue() + 1)
+		}
+		count++
+		if count > 1000000 {
+			panic("unsolvable in less than 1000000 steps")
 		}
 	}
 	board.SetComplete()

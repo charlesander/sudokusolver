@@ -6,6 +6,9 @@ import (
 	"testing"
 )
 
+func TestExplodeToIntSlice(t *testing.T) {
+	t.Skip("ExplodeToIntSlice needs tests")
+}
 func TestStringInSlice(t *testing.T) {
 
 	searchItems := []string{"arg1", "€", "驰馳", ""}
