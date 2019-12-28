@@ -80,11 +80,15 @@ func CheckVertical(board boards.Board, index int) bool {
 }
 
 func ExtractVerticalCol(board boards.Board, offset int) []int {
+	if offset >= boards.CELL_COUNT {
+		panic("Incorrect index supplied to ExtractHorizonalRow")
+	}
 	col := []int{}
-	i := offset
-	for i <= boards.CELL_COUNT {
+	i := 0
+	i = offset % 9
+	for i < boards.CELL_COUNT {
 		col = append(col, board.GetCell(i).GetCellValue())
-		i+= 9
+		i += 9
 	}
 	return col
 }
