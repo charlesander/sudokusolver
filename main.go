@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	board "sudokusolver/pkg/boards"
+	"sudokusolver/pkg/boards"
 	"sudokusolver/pkg/cells"
 	"sudokusolver/pkg/solvers"
 )
@@ -24,8 +24,16 @@ func main() {
 		0, 0, 5, 0, 1, 0, 3, 0, 0,
 	}
 
-	board := board.NewBoard(cells.NewFactory(), easySudoku)
+	board := boards.NewBoard(cells.NewFactory(), easySudoku)
 
 	solvedBoard := solvers.Solve(board)
 	fmt.Println(solvedBoard.CheckComplete())
+
+	for i := 0; i < boards.CELL_COUNT; i++ {
+		fmt.Print(solvedBoard.GetCell(i).GetCellValue(), ",")
+		//fmt.Print( i , ",")
+		if (i+1)%9 == 0 {
+			fmt.Print("\n")
+		}
+	}
 }

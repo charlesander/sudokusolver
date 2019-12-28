@@ -165,58 +165,57 @@ func checkSquares(board boards.Board, index int) bool {
 }
 
 func Solve(board boards.Board) boards.Board {
-	fmt.Println(board.GetCell(0).GetCellType())
 	i := 0
 	for i < boards.CELL_COUNT {
-		fmt.Print(i, ",")
+		fmt.Println(i)
 		if board.GetCell(i).GetCellType() == cells.PRESET_CELL_TYPE {
-			//skip over preset cells (they're not setable)
+			//skip over preset cells (they're not set-able)
 			i++
 			continue
+		} else if board.GetCell(i).GetCellValue() == 0 {
+			board.GetCell(i).SetCellValue(1)
+		} else if checkValid(board, i) {
+			i++
 		} else if board.GetCell(i).GetCellValue() == cells.MAX_CELL_VALUE {
 			//We've tried all the valid values for this cell, time to backtrack
 			board.GetCell(i).SetCellValue(0)
 			for {
 				i--
-				if board.GetCell(i).GetCellType() == cells.SETTABLE_CELL_TYPE {
-					continue
+				if board.GetCell(i).GetCellType() == cells.SETTABLE_CELL_TYPE &&
+					board.GetCell(i).GetCellValue() != 9 {
+					board.GetCell(i).SetCellValue(board.GetCell(i).GetCellValue() + 1)
+					break
 				}
 			}
 		} else {
-
-			if board.GetCell(i).GetCellValue() == 0 {
-				board.GetCell(i).SetCellValue(1)
-			} else if checkValid(board, i) {
-				i++
-			} else {
-				board.GetCell(i).SetCellValue(board.GetCell(i).GetCellValue() + 1)
-			}
+			board.GetCell(i).SetCellValue(board.GetCell(i).GetCellValue() + 1)
 		}
 	}
 
 	return board
 }
-	/*
-		if (checkValid(board, i)) {
-			i++
-			continue
-		}
-		if board.GetCell(i).GetCellType() == cells.PRESET_CELL_TYPE {
-			//skip over preset cells (they're not setable)
-			i++
-			continue
-		} else if board.GetCell(i).GetCellValue() == cells.MAX_CELL_VALUE {
-			//We've tried all the valid values for this cell, time to backtrack
-			board.GetCell(i).SetCellValue(0)
-			for {
-				i--
-				if board.GetCell(i).GetCellType() == cells.SETTABLE_CELL_TYPE {
-					continue
-				}
+
+/*
+	if (checkValid(board, i)) {
+		i++
+		continue
+	}
+	if board.GetCell(i).GetCellType() == cells.PRESET_CELL_TYPE {
+		//skip over preset cells (they're not setable)
+		i++
+		continue
+	} else if board.GetCell(i).GetCellValue() == cells.MAX_CELL_VALUE {
+		//We've tried all the valid values for this cell, time to backtrack
+		board.GetCell(i).SetCellValue(0)
+		for {
+			i--
+			if board.GetCell(i).GetCellType() == cells.SETTABLE_CELL_TYPE {
+				continue
 			}
-		} else {
-			board.GetCell(i).SetCellValue(board.GetCell(i).GetCellValue() + 1)
-			i++
 		}
-		//Otherwise
-	*/
+	} else {
+		board.GetCell(i).SetCellValue(board.GetCell(i).GetCellValue() + 1)
+		i++
+	}
+	//Otherwise
+*/
