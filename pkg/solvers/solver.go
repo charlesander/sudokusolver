@@ -23,6 +23,11 @@ func CheckNineSquares(board boards.Board, index int) bool {
  * all the values of the cells within the square
  */
 func ExtractNineSquares(board boards.Board, index int) []int {
+	squareIndexes := GetSudokuSquareIndexes(board, index)
+	return GetSudokuSquareValues(board, squareIndexes)
+}
+
+func GetSudokuSquareIndexes(board boards.Board, index int) []int {
 	// These are the indexes of the cells within each square
 	topLeftSquare := []int{0,1,2,9,10,11,18,19,20}
 	topCentreSquare := []int{3,4,5,12,13,14,21,22,23}
@@ -35,29 +40,29 @@ func ExtractNineSquares(board boards.Board, index int) []int {
 	bottomRightSquare := []int{60,61,62,69,70,71,78,79,80}
 
 	if utilties.IntInSlice(index, topLeftSquare) {
-		return getSudokuSquareValues(board, topLeftSquare)
+		return topLeftSquare
 	} else if utilties.IntInSlice(index, topCentreSquare) {
-		return getSudokuSquareValues(board, topCentreSquare)
+		return topCentreSquare
 	} else if utilties.IntInSlice(index, topRightSquare) {
-		return getSudokuSquareValues(board, topRightSquare)
+		return topRightSquare
 	} else if utilties.IntInSlice(index, middleLeftSquare) {
-		return getSudokuSquareValues(board, middleLeftSquare)
+		return middleLeftSquare
 	} else if utilties.IntInSlice(index, middleCentreSquare) {
-		return getSudokuSquareValues(board, middleCentreSquare)
+		return middleCentreSquare
 	} else if utilties.IntInSlice(index, middleRightSquare) {
-		return getSudokuSquareValues(board, middleRightSquare)
+		return middleRightSquare
 	} else if utilties.IntInSlice(index, bottomLeftSquare) {
-		return getSudokuSquareValues(board, bottomLeftSquare)
+		return bottomLeftSquare
 	} else if utilties.IntInSlice(index, bottomCentreSquare) {
-		return getSudokuSquareValues(board, bottomCentreSquare)
+		return bottomCentreSquare
 	} else if utilties.IntInSlice(index, bottomRightSquare) {
-		return getSudokuSquareValues(board, bottomRightSquare)
+		return bottomRightSquare
 	} else {
-		panic("Incorrect index supplied to ExtractNineSquares")
+		panic("Incorrect index supplied to GetSudokuSquareIndexes")
 	}
 }
 
-func getSudokuSquareValues(board boards.Board, squareIndex []int) []int {
+func GetSudokuSquareValues(board boards.Board, squareIndex []int) []int {
 	squareValues := []int{}
 	for _, i := range squareIndex {
 		squareValues = append(squareValues, board.GetCell(i).GetCellValue())

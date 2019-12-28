@@ -185,7 +185,15 @@ func TestCheckCheckVerticalWithDuplicateOnCol0(t *testing.T) {
 	assert.False(t, solvers.CheckVertical(board, 60))
 	assert.False(t, solvers.CheckVertical(board, 70))
 	assert.False(t, solvers.CheckVertical(board, 80))
-	assert.False(t, solvers.CheckVertical(board, 81))
+
+	// Out of allowed range values
+	assert.Panics(t, func() {
+		solvers.CheckVertical(board, 81)
+	})
+
+	assert.Panics(t, func() {
+		solvers.CheckVertical(board, -1)
+	})
 }
 
 func TestExtractVerticalCol(t *testing.T) {
