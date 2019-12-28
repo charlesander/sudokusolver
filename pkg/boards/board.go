@@ -5,8 +5,10 @@ import (
 )
 
 const CELL_COUNT = 81
+const BOARD_SIDE_LENGTH = 9;
 
 type boardStruct struct {
+	complete bool
 	cellsFactory cells.Factory
 	cells        []cells.IndividualCell
 }
@@ -14,6 +16,7 @@ type Board interface {
 	GetCell(index int) cells.IndividualCell
 	SetCellValue(index int, value int)
 	GetCells() *[]cells.IndividualCell
+	SetComplete()
 	CheckComplete() bool
 }
 
@@ -23,7 +26,7 @@ func NewBoard(cellFactory cells.Factory, initialValues []int) Board {
 		panic("Invalid number of sudoku values provided")
 	}
 
-	board := boardStruct{cellFactory, []cells.IndividualCell{}}
+	board := boardStruct{false, cellFactory, []cells.IndividualCell{}}
 	for _, initialValue := range initialValues {
 		board.cells = append(board.cells, board.cellsFactory.NewCell(initialValue))
 	}
@@ -47,6 +50,10 @@ func (b boardStruct) GetCells() *[]cells.IndividualCell {
 	return &b.cells
 }
 
+func (b *boardStruct) SetComplete() {
+	b.complete = true
+}
+
 func (b boardStruct) CheckComplete() bool {
-	return true
+	return b.complete
 }

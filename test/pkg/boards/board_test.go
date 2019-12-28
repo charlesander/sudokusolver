@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/stretchr/testify/assert"
-	board "sudokusolver/pkg/boards"
+	"sudokusolver/pkg/boards"
 	"sudokusolver/pkg/cells"
 	"testing"
 )
@@ -23,7 +23,7 @@ func TestBoardInitiation(t *testing.T) {
 		0, 0, 5, 0, 1, 0, 3, 0, 0,
 	}
 
-	board := board.NewBoard(cells.NewFactory(), easySudoku)
+	board := boards.NewBoard(cells.NewFactory(), easySudoku)
 
 	cell := board.GetCell(0)
 	assert.Equal(t, cell.GetCellValue(), 0)
@@ -54,7 +54,7 @@ func TestSettingCell(t *testing.T) {
 		0, 0, 5, 0, 1, 0, 3, 0, 0,
 	}
 
-	board := board.NewBoard(cells.NewFactory(), easySudoku)
+	board := boards.NewBoard(cells.NewFactory(), easySudoku)
 
 	//Correctly set a cell value for the settable cell
 	board.SetCellValue(0, 1)
@@ -70,7 +70,7 @@ func TestSettingCell(t *testing.T) {
 	board.SetCellValue(0, 5)
 	assert.Equal(t, board.GetCell(0).GetCellValue(), 5)
 
-	board.SetCellValue(0, 9)
+	board.SetCellValue(0, boards.BOARD_SIDE_LENGTH)
 	assert.Equal(t, board.GetCell(0).GetCellValue(), 9)
 	//Fail setting a cell value for a settable cell
 
@@ -118,11 +118,49 @@ func TestGetCells(t *testing.T) {
 		cells = append(cells, cellFactory.NewCell(initialValue))
 	}
 
-	board := board.NewBoard(cellFactory, easySudoku)
+	board := boards.NewBoard(cellFactory, easySudoku)
 
 	assert.Equal(t, cellsP, board.GetCells())
 }
 
+func TestSetComplete(t *testing.T) {
+	var easySudoku = []int{
+		0, 0, 3, 0, 2, 0, 6, 0, 0,
+		9, 0, 0, 3, 0, 5, 0, 0, 1,
+		0, 0, 1, 8, 0, 6, 4, 0, 0,
+
+		0, 0, 8, 1, 0, 2, 9, 0, 0,
+		7, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 6, 7, 0, 8, 2, 0, 0,
+
+		0, 0, 2, 6, 0, 9, 5, 0, 0,
+		8, 0, 0, 2, 0, 3, 0, 0, 0,
+		0, 0, 5, 0, 1, 0, 3, 0, 0,
+	}
+
+	board := boards.NewBoard(cells.NewFactory(), easySudoku)
+	assert.False(t, board.CheckComplete())
+	board.SetComplete()
+	assert.True(t, board.CheckComplete())
+}
+
 func TestCheckComplete(t *testing.T) {
-	t.Skip("Skipped - implement TestCheckComplete when function implemented")
+	var easySudoku = []int{
+		0, 0, 3, 0, 2, 0, 6, 0, 0,
+		9, 0, 0, 3, 0, 5, 0, 0, 1,
+		0, 0, 1, 8, 0, 6, 4, 0, 0,
+
+		0, 0, 8, 1, 0, 2, 9, 0, 0,
+		7, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 6, 7, 0, 8, 2, 0, 0,
+
+		0, 0, 2, 6, 0, 9, 5, 0, 0,
+		8, 0, 0, 2, 0, 3, 0, 0, 0,
+		0, 0, 5, 0, 1, 0, 3, 0, 0,
+	}
+
+	board := boards.NewBoard(cells.NewFactory(), easySudoku)
+	assert.False(t, board.CheckComplete())
+	board.SetComplete()
+	assert.True(t, board.CheckComplete())
 }

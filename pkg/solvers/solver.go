@@ -1,13 +1,12 @@
 package solvers
 
 import (
-	"fmt"
 	"sudokusolver/pkg/boards"
 	"sudokusolver/pkg/cells"
 	utilties "sudokusolver/pkg/utilites"
 )
 
-func checkValid(board boards.Board, index int) bool {
+func CheckValid(board boards.Board, index int) bool {
 	return CheckHorizontal(board, index) &&
 		CheckVertical(board, index) &&
 		CheckNineSquares(board, index)
@@ -72,7 +71,7 @@ func GetSudokuSquareValues(board boards.Board, squareIndex []int) []int {
 }
 
 func CheckHorizontal(board boards.Board, index int) bool {
-	for i := 0; i < boards.CELL_COUNT; i += 9 {
+	for i := 0; i < boards.CELL_COUNT; i += boards.BOARD_SIDE_LENGTH {
 		if i <= index {
 			if !utilties.AreSudokuValuesUnique(ExtractHorizontalRow(board, i)) {
 				return false
@@ -129,7 +128,7 @@ func GetVerticalOffset(index int) int {
 	if index >= boards.CELL_COUNT || index < 0 {
 		panic("Incorrect index supplied to GetVerticalOffset")
 	}
-	return index % 9
+	return index % boards.BOARD_SIDE_LENGTH
 }
 
 func CheckVertical(board boards.Board, index int) bool {
@@ -151,11 +150,10 @@ func ExtractVerticalCol(board boards.Board, offset int) []int {
 		panic("Incorrect index supplied to ExtractHorizonalRow")
 	}
 	col := []int{}
-	i := 0
-	i = offset % 9
+	i := offset % boards.BOARD_SIDE_LENGTH
 	for i < boards.CELL_COUNT {
 		col = append(col, board.GetCell(i).GetCellValue())
-		i += 9
+		i += boards.BOARD_SIDE_LENGTH
 	}
 	return col
 }
@@ -167,19 +165,20 @@ func checkSquares(board boards.Board, index int) bool {
 func Solve(board boards.Board) boards.Board {
 	i := 0
 	for i < boards.CELL_COUNT {
-		fmt.Println(i)
 		if board.GetCell(i).GetCellType() == cells.PRESET_CELL_TYPE {
 			//skip over preset cells (they're not set-able)
 			i++
 			continue
 		} else if board.GetCell(i).GetCellValue() == 0 {
 			board.GetCell(i).SetCellValue(1)
-		} else if checkValid(board, i) {
+		} else if CheckValid(board, i) {
 			i++
 		} else if board.GetCell(i).GetCellValue() == cells.MAX_CELL_VALUE {
 			//We've tried all the valid values for this cell, time to backtrack
 			board.GetCell(i).SetCellValue(0)
 			for {
+				//Continue backtracking if the cell is not settable or the cell value
+				// is not able to be incremented again
 				i--
 				if board.GetCell(i).GetCellType() == cells.SETTABLE_CELL_TYPE &&
 					board.GetCell(i).GetCellValue() != 9 {
@@ -191,31 +190,6 @@ func Solve(board boards.Board) boards.Board {
 			board.GetCell(i).SetCellValue(board.GetCell(i).GetCellValue() + 1)
 		}
 	}
-
+	board.SetComplete()
 	return board
 }
-
-/*
-	if (checkValid(board, i)) {
-		i++
-		continue
-	}
-	if board.GetCell(i).GetCellType() == cells.PRESET_CELL_TYPE {
-		//skip over preset cells (they're not setable)
-		i++
-		continue
-	} else if board.GetCell(i).GetCellValue() == cells.MAX_CELL_VALUE {
-		//We've tried all the valid values for this cell, time to backtrack
-		board.GetCell(i).SetCellValue(0)
-		for {
-			i--
-			if board.GetCell(i).GetCellType() == cells.SETTABLE_CELL_TYPE {
-				continue
-			}
-		}
-	} else {
-		board.GetCell(i).SetCellValue(board.GetCell(i).GetCellValue() + 1)
-		i++
-	}
-	//Otherwise
-*/
