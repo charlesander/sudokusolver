@@ -49,6 +49,23 @@ func TestCheckHorizonalWithDuplicateOnRow1(t *testing.T) {
 
 	assert.False(t, solvers.CheckHorizontal(board, 0))
 	assert.False(t, solvers.CheckHorizontal(board, 1))
+	assert.False(t, solvers.CheckHorizontal(board, 2))
+	assert.False(t, solvers.CheckHorizontal(board, 3))
+	assert.False(t, solvers.CheckHorizontal(board, 1))
+	assert.False(t, solvers.CheckHorizontal(board, 6))
+	assert.False(t, solvers.CheckHorizontal(board, 7))
+	assert.False(t, solvers.CheckHorizontal(board, 8))
+	assert.False(t, solvers.CheckHorizontal(board, 9))
+	assert.False(t, solvers.CheckHorizontal(board, 10))
+	assert.False(t, solvers.CheckHorizontal(board, 20))
+	assert.False(t, solvers.CheckHorizontal(board, 30))
+	assert.False(t, solvers.CheckHorizontal(board, 40))
+	assert.False(t, solvers.CheckHorizontal(board, 50))
+	assert.False(t, solvers.CheckHorizontal(board, 60))
+	assert.False(t, solvers.CheckHorizontal(board, 70))
+	assert.False(t, solvers.CheckHorizontal(board, 80))
+	assert.False(t, solvers.CheckHorizontal(board, 81))
+
 }
 
 func TestCheckHorizonalWithDuplicateOnRow5(t *testing.T) {

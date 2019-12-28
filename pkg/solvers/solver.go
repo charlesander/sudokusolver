@@ -8,8 +8,8 @@ import (
 )
 
 func checkValid(board boards.Board, index int) bool {
-	//check horizontal
-	//check vertical
+	//CheckHorizontal(board, index)
+	//CheckVertical(board, index)
 	//check 3x3 squares
 	return true
 }
@@ -21,7 +21,7 @@ func CheckHorizontal(board boards.Board, index int) bool {
 				return false
 			}
 		} else {
-			break
+			continue
 		}
 	}
 	return true
@@ -69,18 +69,28 @@ func ExtractHorizontalRow(board boards.Board, index int) []int {
 }
 
 func GetVerticalOffset(index int) int {
+	if index >= boards.CELL_COUNT || index < 0 {
+		panic("Incorrect index supplied to GetVerticalOffset")
+	}
 	return index % 9
 }
 
 func CheckVertical(board boards.Board, index int) bool {
-	//col := []int{}
-	//currentOffset := GetVerticalOffset(index)
-	//return col
+	currentOffset := GetVerticalOffset(index)
+	for i := 0; i <= currentOffset; i++ {
+		if i <= index {
+			if !utilties.AreSudokuValuesUnique(ExtractVerticalCol(board, i)) {
+				return false
+			}
+		} else {
+			continue
+		}
+	}
 	return true
 }
 
 func ExtractVerticalCol(board boards.Board, offset int) []int {
-	if offset >= boards.CELL_COUNT {
+	if offset >= boards.CELL_COUNT || offset < 0 {
 		panic("Incorrect index supplied to ExtractHorizonalRow")
 	}
 	col := []int{}
