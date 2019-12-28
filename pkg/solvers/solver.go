@@ -6,6 +6,25 @@ import (
 	utilties "sudokusolver/pkg/utilites"
 )
 
+/**
+ * This function should only be run on a board before attempting
+ * to solve it to check that that it is solvable
+ * By running this before attempting to solve, the only cells with
+ * a value assigned to them will be the pre-set cells. If there are
+ * pre-set cells are set with duplicate values (in rows, columns or squares)
+ * then the algorithm (as written in this library) will never be able to change
+ * them in order to make the sudoku solvable. Checking the board with
+ * this function can avert that scenario.
+ */
+func CheckBoardIsSolvable(board boards.Board) bool {
+	for i := 0; i < boards.CELL_COUNT; i++ {
+		if !CheckValid(board, i) {
+			return false
+		}
+	}
+	return true
+}
+
 func CheckValid(board boards.Board, index int) bool {
 	return CheckHorizontal(board, index) &&
 		CheckVertical(board, index) &&
@@ -163,6 +182,9 @@ func checkSquares(board boards.Board, index int) bool {
 }
 
 func Solve(board boards.Board) boards.Board {
+	if !CheckBoardIsSolvable(board) {
+		panic("Unsolvable board provided")
+	}
 	i := 0
 	for i < boards.CELL_COUNT {
 		if board.GetCell(i).GetCellType() == cells.PRESET_CELL_TYPE {
