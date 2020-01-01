@@ -1,13 +1,11 @@
 package servers
 
 import (
-	"bytes"
-	"fmt"
+	"encoding/json"
 	"github.com/gorilla/mux"
 	"io"
 	"log"
 	"net/http"
-	"strconv"
 	"sudokusolver/pkg/boards"
 	"sudokusolver/pkg/cells"
 	"sudokusolver/pkg/solvers"
@@ -31,7 +29,7 @@ func GenerateHandler() *mux.Router {
 	router := mux.NewRouter()
 
 	router.HandleFunc("/ping", handlePing).Methods("GET")
-	router.HandleFunc("/solve/{sudokuCellValues}", handleSolve).Methods("GET")
+	router.HandleFunc("/solve", handleSolve).Methods("GET")
 
 	return router
 }
@@ -41,25 +39,27 @@ func handlePing(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleSolve(w http.ResponseWriter, r *http.Request) {
-	params := mux.Vars(r)
-	sudokuCellValues := params["sudokuCellValues"]
-	cellValues := utilties.ExplodeToIntSlice(sudokuCellValues)
 
-	board := boards.NewBoard(cells.NewFactory(), cellValues)
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	w.Header().Set("Access-Control-Allow-Headers", "Origin, Content-Type, Accept, Authorization, X-Request-With")
+
+	stringCellValues, ok := r.URL.Query()["cellValues[]"]
+	intCellValues := []int{}
+	if !ok  {
+		log.Println("Url Param 'cellValues[]' is missing")
+		return
+	} else {
+		intCellValues = utilties.ConvertStringSliceToIntSlice(stringCellValues)
+	}
+
+	board := boards.NewBoard(cells.NewFactory(), intCellValues)
 	solvers.Solve(board)
 
-	fmt.Println(cellValues)
-
-
-	buf := bytes.Buffer{}
+	values := []int{}
 	for i := 0; i < boards.CELL_COUNT; i++ {
-		buf.WriteString(strconv.Itoa(board.GetCell(i).GetCellValue()))
-		//fmt.Print( i , ",")
-		if (i+1)%9 == 0 {
-			buf.WriteString("\n")
-		}
+		values  = append(values, board.GetCell(i).GetCellValue())
 	}
-	result := buf.String()
-	//io.WriteString(w, strconv.FormatBool(board.CheckComplete()))
-	io.WriteString(w, result)
+	json.NewEncoder(w).Encode(values)
+
 }
