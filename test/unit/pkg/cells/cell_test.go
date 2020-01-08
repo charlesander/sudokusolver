@@ -31,29 +31,29 @@ func TestSetCellValue(t *testing.T) {
 func TestCellInitiationWithInvalidData(t *testing.T) {
 	cellFactory := cells.NewFactory()
 
-	assert.Panics(t, func() {
-		cellFactory.NewCell( -1)
-	})
+	cell, err := cellFactory.NewCell( -1)
+	assert.Nil(t, cell)
+	assert.Error(t, err)
 
-	assert.Panics(t, func() {
-		cellFactory.NewCell(10)
-	})
+	cell, err = cellFactory.NewCell( 10)
+	assert.Nil(t, cell)
+	assert.Error(t, err)
 
-	assert.Panics(t, func() {
-		cellFactory.NewCell( -500)
-	})
+	cell, err = cellFactory.NewCell( -500)
+	assert.Nil(t, cell)
+	assert.Error(t, err)
 
-	assert.Panics(t, func() {
-		cellFactory.NewCell(123)
-	})
+	cell, err = cellFactory.NewCell( 123)
+	assert.Nil(t, cell)
+	assert.Error(t, err)
 
-	assert.Panics(t, func() {
-		cellFactory.NewCell( -1)
-	})
+	cell, err = cellFactory.NewCell( -1)
+	assert.Nil(t, cell)
+	assert.Error(t, err)
 
-	assert.Panics(t, func() {
-		cellFactory.NewCell(10)
-	})
+	cell, err = cellFactory.NewCell( 10)
+	assert.Nil(t, cell)
+	assert.Error(t, err)
 }
 
 func TestValidateCellValue(t *testing.T) {

@@ -23,7 +23,10 @@ func TestCheckBoardHasValidLayout(t *testing.T) {
 		0, 0, 5, 0, 1, 0, 3, 0, 0,
 	}
 	board, err := boards.NewBoard(cells.NewFactory(), easySudoku)
-	assert.True(t, solvers.CheckBoardHasValidLayout(board))
+	assert.Nil(t, err)
+	isValidLayout, err := solvers.CheckBoardHasValidLayout(board)
+	assert.True(t, isValidLayout)
+	assert.Nil(t, err)
 
 	var brokenSudoku = []int{
 		0, 0, 3, 0, 2, 0, 6, 0, 0,
@@ -42,7 +45,9 @@ func TestCheckBoardHasValidLayout(t *testing.T) {
 
 	assert.Nil(t, err)
 
-	assert.False(t, solvers.CheckBoardHasValidLayout(brokenBoard))
+	invalidLayout, err := solvers.CheckBoardHasValidLayout(brokenBoard)
+	assert.False(t, invalidLayout)
+	assert.Error(t, err)
 
 	var hardSudoku2 = []int{
 		6, 0, 0, 0, 0, 0, 1, 5, 0,
@@ -61,7 +66,9 @@ func TestCheckBoardHasValidLayout(t *testing.T) {
 
 	assert.Nil(t, err)
 
-	assert.False(t, solvers.CheckBoardHasValidLayout(brokenBoard2))
+	invalidLayout2, err := solvers.CheckBoardHasValidLayout(brokenBoard2)
+	assert.False(t, invalidLayout2)
+	assert.Error(t, err)
 }
 func TestCheckValidWithDuplicate(t *testing.T) {
 	var easySudoku = []int{
@@ -82,15 +89,33 @@ func TestCheckValidWithDuplicate(t *testing.T) {
 
 	assert.Nil(t, err)
 
-	assert.True(t, solvers.CheckValid(board, 0))
-	assert.True(t, solvers.CheckValid(board, 10))
-	assert.True(t, solvers.CheckValid(board, 20))
-	assert.False(t, solvers.CheckValid(board, 30))
-	assert.False(t, solvers.CheckValid(board, 40))
-	assert.False(t, solvers.CheckValid(board, 50))
-	assert.False(t, solvers.CheckValid(board, 60))
-	assert.False(t, solvers.CheckValid(board, 70))
-	assert.False(t, solvers.CheckValid(board, 80))
+	isValid, err := solvers.CheckValid(board, 0)
+	assert.True(t, isValid)
+	assert.Nil(t, err)
+	isValid, err = solvers.CheckValid(board, 10)
+	assert.True(t, isValid)
+	assert.Nil(t, err)
+	isValid, err = solvers.CheckValid(board, 20)
+	assert.True(t, isValid)
+	assert.Nil(t, err)
+	isValid, err = solvers.CheckValid(board, 30)
+	assert.True(t, isValid)
+	assert.Nil(t, err)
+	isValid, err = solvers.CheckValid(board, 40)
+	assert.True(t, isValid)
+	assert.Nil(t, err)
+	isValid, err = solvers.CheckValid(board, 50)
+	assert.True(t, isValid)
+	assert.Nil(t, err)
+	isValid, err = solvers.CheckValid(board, 60)
+	assert.True(t, isValid)
+	assert.Nil(t, err)
+	isValid, err = solvers.CheckValid(board, 70)
+	assert.True(t, isValid)
+	assert.Nil(t, err)
+	isValid, err = solvers.CheckValid(board, 80)
+	assert.True(t, isValid)
+	assert.Nil(t, err)
 }
 
 func TestCheckValid(t *testing.T) {
@@ -112,15 +137,33 @@ func TestCheckValid(t *testing.T) {
 
 	assert.Nil(t, err)
 
-	assert.True(t, solvers.CheckValid(board, 0))
-	assert.True(t, solvers.CheckValid(board, 10))
-	assert.True(t, solvers.CheckValid(board, 20))
-	assert.True(t, solvers.CheckValid(board, 30))
-	assert.True(t, solvers.CheckValid(board, 40))
-	assert.True(t, solvers.CheckValid(board, 50))
-	assert.True(t, solvers.CheckValid(board, 60))
-	assert.True(t, solvers.CheckValid(board, 70))
-	assert.True(t, solvers.CheckValid(board, 80))
+	isValid, err := solvers.CheckValid(board, 0)
+	assert.True(t, isValid)
+	assert.Nil(t, err)
+	isValid, err = solvers.CheckValid(board, 10)
+	assert.True(t, isValid)
+	assert.Nil(t, err)
+	isValid, err = solvers.CheckValid(board, 20)
+	assert.True(t, isValid)
+	assert.Nil(t, err)
+	isValid, err = solvers.CheckValid(board, 30)
+	assert.True(t, isValid)
+	assert.Nil(t, err)
+	isValid, err = solvers.CheckValid(board, 40)
+	assert.True(t, isValid)
+	assert.Nil(t, err)
+	isValid, err = solvers.CheckValid(board, 50)
+	assert.True(t, isValid)
+	assert.Nil(t, err)
+	isValid, err = solvers.CheckValid(board, 60)
+	assert.True(t, isValid)
+	assert.Nil(t, err)
+	isValid, err = solvers.CheckValid(board, 70)
+	assert.True(t, isValid)
+	assert.Nil(t, err)
+	isValid, err = solvers.CheckValid(board, 80)
+	assert.True(t, isValid)
+	assert.Nil(t, err)
 }
 
 func TestSolve(t *testing.T) {
@@ -142,7 +185,8 @@ func TestSolve(t *testing.T) {
 
 	assert.Nil(t, err)
 
-	solvedEasyBoard := solvers.Solve(easyBoard)
+	solvedEasyBoard, err := solvers.Solve(easyBoard)
+	assert.Nil(t, err)
 
 	var solvedEasyBoardExpectedResult = []int{
 		4, 8, 3, 9, 2, 1, 6, 5, 7,
@@ -175,7 +219,8 @@ func TestSolve(t *testing.T) {
 
 	hardBoard, err := boards.NewBoard(cells.NewFactory(), hardSudoku)
 
-	solvedHardBoard := solvers.Solve(hardBoard)
+	solvedHardBoard, err := solvers.Solve(hardBoard)
+	assert.Nil(t, err)
 
 	var solvedHardBoardExpectedResult = []int{
 		6, 3, 2, 4, 8, 9, 1, 5, 7,
