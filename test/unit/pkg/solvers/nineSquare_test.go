@@ -372,16 +372,17 @@ func TestGetSudokuSquareValues(t *testing.T) {
 	assert.Nil(t, err)
 	assert.Equal(t, expectedSquareValues, values)
 
-	squareIndexes = []int{6,1,83}
 	// Out of expected range error
-	assert.Panics(t, func() {
-		solvers.GetSudokuSquareValues(board, squareIndexes)
-	})
+
+	squareIndexes = []int{6,1,83}
+	values, err = solvers.GetSudokuSquareValues(board, squareIndexes);
+	assert.Nil(t, values)
+	assert.Error(t, err)
 
 	squareIndexes = []int{6,1,-1,234}
-	assert.Panics(t, func() {
-		solvers.GetSudokuSquareValues(board, squareIndexes)
-	})
+	values, err = solvers.GetSudokuSquareValues(board, squareIndexes);
+	assert.Nil(t, values)
+	assert.Error(t, err)
 }
 
 func TestExtractNineSquares(t *testing.T) {

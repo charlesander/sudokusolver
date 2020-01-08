@@ -210,7 +210,7 @@ func CheckVertical(board boards.Board, index int) (bool, error) {
 
 func ExtractVerticalCol(board boards.Board, offset int) ([]int, error) {
 	if offset >= boards.CELL_COUNT || offset < 0 {
-		panic("Incorrect index supplied to ExtractHorizonalRow")
+		return nil, errors.New("Incorrect index supplied to ExtractHorizonalRow")
 	}
 	col := []int{}
 	i := offset % boards.BOARD_SIDE_LENGTH

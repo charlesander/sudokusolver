@@ -494,13 +494,14 @@ func TestExtractVerticalCol(t *testing.T) {
 	assert.Equal(t, expectedCol, cols)
 
 	// Out of allowed range values
-	assert.Panics(t, func() {
-		solvers.ExtractVerticalCol(board, 81)
-	})
+	expectedCol = nil
+	cols, err = solvers.ExtractVerticalCol(board, 81);
+	assert.Nil(t, cols)
+	assert.Error(t, err)
 
-	assert.Panics(t, func() {
-		solvers.ExtractVerticalCol(board, -1)
-	})
+	cols, err = solvers.ExtractVerticalCol(board, -1);
+	assert.Nil(t, cols)
+	assert.Error(t, err)
 }
 func TestGetVerticalOffset(t *testing.T) {
 

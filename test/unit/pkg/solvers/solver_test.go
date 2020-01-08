@@ -236,7 +236,7 @@ func TestSolve(t *testing.T) {
 		3, 4, 9, 1, 2, 8, 7, 6, 5}
 
 	for i, element := range solvedHardBoardExpectedResult {
-		cell, err := solvedEasyBoard.GetCell(i)
+		cell, err := solvedHardBoard.GetCell(i)
 		assert.Equal(t, element, cell.GetCellValue())
 		assert.Nil(t, err)
 	}
