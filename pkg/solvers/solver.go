@@ -35,7 +35,10 @@ func CheckValid(board boards.Board, index int) (bool, error) {
 	if err != nil {
 		return false, err
 	}
-	vertical := CheckVertical(board, index)
+	vertical, err := CheckVertical(board, index)
+	if(err != nil) {
+		return false, err
+	}
 	nineSquares, err := CheckNineSquares(board, index)
 	if err != nil {
 		return false, err
@@ -169,25 +172,28 @@ func ExtractHorizontalRow(board boards.Board, index int) ([]int, error) {
 	return row, nil
 }
 
-func GetVerticalOffset(index int) int {
+func GetVerticalOffset(index int) (int, error) {
 	if index >= boards.CELL_COUNT || index < 0 {
-		panic("Incorrect index supplied to GetVerticalOffset")
+		return 0, errors.New("Incorrect index supplied to GetVerticalOffset")
 	}
-	return index % boards.BOARD_SIDE_LENGTH
+	return (index % boards.BOARD_SIDE_LENGTH), nil
 }
 
-func CheckVertical(board boards.Board, index int) bool {
-	currentOffset := GetVerticalOffset(index)
+func CheckVertical(board boards.Board, index int) (bool, error) {
+	currentOffset, err := GetVerticalOffset(index)
+	if(err != nil) {
+		return false, err
+	}
 	for i := 0; i <= currentOffset; i++ {
 		if i <= index {
 			if !utilties.AreSudokuValuesUnique(ExtractVerticalCol(board, i)) {
-				return false
+				return false, nil
 			}
 		} else {
 			continue
 		}
 	}
-	return true
+	return true, nil
 }
 
 func ExtractVerticalCol(board boards.Board, offset int) []int {
