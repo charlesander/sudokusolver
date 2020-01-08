@@ -24,8 +24,10 @@ func mainExample() {
 		0, 0, 5, 0, 1, 0, 3, 0, 0,
 	}
 
-	solvedEasyBoard := boards.NewBoard(cells.NewFactory(), easySudoku)
-
+	solvedEasyBoard, err := boards.NewBoard(cells.NewFactory(), easySudoku)
+	if err != nil {
+		//TODO
+	}
 	solvers.Solve(solvedEasyBoard)
 	fmt.Println(solvedEasyBoard.CheckComplete())
 
@@ -45,20 +47,27 @@ func mainExample() {
 		0, 4, 9, 0, 0, 0, 0, 0, 5,
 	}
 
-	solvedHardBoard := boards.NewBoard(cells.NewFactory(), hardSudoku)
-
+	solvedHardBoard, err := boards.NewBoard(cells.NewFactory(), hardSudoku)
+	if err != nil {
+		//TODO
+	}
 	solvers.Solve(solvedHardBoard)
 	fmt.Println(solvedHardBoard.CheckComplete())
 
 	echoBoard(solvedHardBoard)
 }
 
-func echoBoard(solvedBoard boards.Board) {
+func echoBoard(solvedBoard boards.Board) error{
 	for i := 0; i < boards.CELL_COUNT; i++ {
-		fmt.Print(solvedBoard.GetCell(i).GetCellValue(), ",")
+		cell, err := solvedBoard.GetCell(i)
+		if(err != nil) {
+			return err
+		}
+		fmt.Print(cell.GetCellValue(), ",")
 		//fmt.Print( i , ",")
 		if (i+1)%9 == 0 {
 			fmt.Print("\n")
 		}
 	}
+	return nil
 }
