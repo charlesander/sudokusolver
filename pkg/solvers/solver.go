@@ -24,7 +24,7 @@ func CheckBoardHasValidLayout(board boards.Board) (bool, error) {
 			return false, err
 		}
 		if ! valid {
-			return false, nil
+			return false, errors.New("Invalid cell value detected")
 		}
 	}
 	return true, nil
