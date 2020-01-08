@@ -1,6 +1,7 @@
 package solvers
 
 import (
+	"errors"
 	"sudokusolver/pkg/boards"
 	"sudokusolver/pkg/cells"
 	utilties "sudokusolver/pkg/utilites"
@@ -41,12 +42,15 @@ func CheckNineSquares(board boards.Board, index int) bool {
  * If the idex of the cell being checked falls in one of the squares, return
  * all the values of the cells within the square
  */
-func ExtractNineSquares(board boards.Board, index int) []int {
-	squareIndexes := GetSudokuSquareIndexes(board, index)
-	return GetSudokuSquareValues(board, squareIndexes)
+func ExtractNineSquares(board boards.Board, index int) ([]int, error) {
+	squareIndexes, err := GetSudokuSquareIndexes(board, index)
+	if err != nil {
+		return nil, err
+	}
+	return GetSudokuSquareValues(board, squareIndexes), nil
 }
 
-func GetSudokuSquareIndexes(board boards.Board, index int) []int {
+func GetSudokuSquareIndexes(board boards.Board, index int) ([]int, error) {
 	// These are the indexes of the cells within each square
 	topLeftSquare := []int{0, 1, 2, 9, 10, 11, 18, 19, 20}
 	topCentreSquare := []int{3, 4, 5, 12, 13, 14, 21, 22, 23}
@@ -59,13 +63,13 @@ func GetSudokuSquareIndexes(board boards.Board, index int) []int {
 	bottomRightSquare := []int{60, 61, 62, 69, 70, 71, 78, 79, 80}
 
 	if utilties.IntInSlice(index, topLeftSquare) {
-		return topLeftSquare
+		return topLeftSquare, nil
 	} else if utilties.IntInSlice(index, topCentreSquare) {
 		return topCentreSquare
 	} else if utilties.IntInSlice(index, topRightSquare) {
 		return topRightSquare
 	} else if utilties.IntInSlice(index, middleLeftSquare) {
-		return middleLeftSquare
+		return middleLeftSquare, nil
 	} else if utilties.IntInSlice(index, middleCentreSquare) {
 		return middleCentreSquare
 	} else if utilties.IntInSlice(index, middleRightSquare) {
@@ -77,7 +81,7 @@ func GetSudokuSquareIndexes(board boards.Board, index int) []int {
 	} else if utilties.IntInSlice(index, bottomRightSquare) {
 		return bottomRightSquare
 	} else {
-		panic("Incorrect index supplied to GetSudokuSquareIndexes")
+		return nil, errors.New("Incorrect index supplied to GetSudokuSquareIndexes")
 	}
 }
 
@@ -102,7 +106,7 @@ func CheckHorizontal(board boards.Board, index int) bool {
 	return true
 }
 
-func ExtractHorizontalRow(board boards.Board, index int) []int {
+func ExtractHorizontalRow(board boards.Board, index int) ([]int, error) {
 	row := []int{}
 	start := 0
 	end := 0
@@ -134,13 +138,13 @@ func ExtractHorizontalRow(board boards.Board, index int) []int {
 		start = 72
 		end = 80
 	} else {
-		panic("Incorrect index supplied to ExtractHorizonalRow")
+		return nil, Errors.New("Incorrect index supplied to ExtractHorizonalRow")
 	}
 
 	for i := start; i <= end; i++ {
 		row = append(row, board.GetCell(i).GetCellValue())
 	}
-	return row
+	return row, nil
 }
 
 func GetVerticalOffset(index int) int {

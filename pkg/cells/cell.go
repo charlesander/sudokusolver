@@ -1,5 +1,7 @@
 package cells
 
+import "errors"
+
 const SETTABLE_CELL_TYPE = "Settable"
 const PRESET_CELL_TYPE = "Preset"
 const MIN_CELL_VALUE = 0
@@ -28,8 +30,9 @@ func (p *individual) SetCellValue(newValue int) {
 	p.cellValue = newValue
 }
 
-func ValidateCellValue(CellValue int) {
+func ValidateCellValue(CellValue int) error {
 	if CellValue < MIN_CELL_VALUE || CellValue > MAX_CELL_VALUE {
-		panic("Invalid CellValue provided")
+		return errors.New("Invalid CellValue provided")
 	}
+	return nil
 }

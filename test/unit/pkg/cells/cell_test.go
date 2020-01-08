@@ -57,48 +57,19 @@ func TestCellInitiationWithInvalidData(t *testing.T) {
 }
 
 func TestValidateCellValue(t *testing.T) {
-	assert.NotPanics(t, func() {
-		cells.ValidateCellValue(1)
-	})
-	assert.NotPanics(t, func() {
-		cells.ValidateCellValue(2)
-	})
-	assert.NotPanics(t, func() {
-		cells.ValidateCellValue(3)
-	})
-	assert.NotPanics(t, func() {
-		cells.ValidateCellValue(4)
-	})
-	assert.NotPanics(t, func() {
-		cells.ValidateCellValue(5)
-	})
-	assert.NotPanics(t, func() {
-		cells.ValidateCellValue(6)
-	})
-	assert.NotPanics(t, func() {
-		cells.ValidateCellValue(7)
-	})
-	assert.NotPanics(t, func() {
-		cells.ValidateCellValue(8)
-	})
-	assert.NotPanics(t, func() {
-		cells.ValidateCellValue(9)
-	})
+	assert.Nil(t, cells.ValidateCellValue(1))
+	assert.Nil(t, cells.ValidateCellValue(2))
+	assert.Nil(t, cells.ValidateCellValue(3))
+	assert.Nil(t, cells.ValidateCellValue(4))
+	assert.Nil(t, cells.ValidateCellValue(5))
+	assert.Nil(t, cells.ValidateCellValue(6))
+	assert.Nil(t, cells.ValidateCellValue(7))
+	assert.Nil(t, cells.ValidateCellValue(8))
+	assert.Nil(t, cells.ValidateCellValue(9))
 
-	assert.Panics(t, func() {
-		cells.ValidateCellValue(-1)
-	})
-	assert.Panics(t, func() {
-		cells.ValidateCellValue(-10)
-	})
-	assert.Panics(t, func() {
-		cells.ValidateCellValue(-123423434234)
-	})
-	assert.Panics(t, func() {
-		cells.ValidateCellValue(10)
-	})
-	assert.Panics(t, func() {
-		cells.ValidateCellValue(132423430)
-	})
-
+	assert.Error(t, cells.ValidateCellValue(-1), "test")
+	assert.Error(t, cells.ValidateCellValue(-10), "test")
+	assert.Error(t, cells.ValidateCellValue(-123423434234), "test")
+	assert.Error(t, cells.ValidateCellValue(10), "test")
+	assert.Error(t, cells.ValidateCellValue(132423430), "test")
 }

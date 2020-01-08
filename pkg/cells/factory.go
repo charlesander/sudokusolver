@@ -10,16 +10,19 @@ func NewFactory() Factory {
 
 //Service Define the output service interface
 type Factory interface {
-	NewCell(CellValue int) IndividualCell
+	NewCell(CellValue int) (IndividualCell, error)
 }
 
-func (f fact) NewCell(CellValue int) IndividualCell {
-	ValidateCellValue(CellValue)
+func (f fact) NewCell(CellValue int) (IndividualCell, error) {
+	err := ValidateCellValue(CellValue)
+	if(err != nil) {
+		return nil, err
+	}
 	var CellType string
 	if CellValue == 0 {
 		CellType = SETTABLE_CELL_TYPE
 	} else {
 		CellType = PRESET_CELL_TYPE
 	}
-	return &individual{CellType, CellValue}
+	return &individual{CellType, CellValue}, nil
 }

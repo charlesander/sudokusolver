@@ -29,7 +29,11 @@ func NewBoard(cellFactory cells.Factory, initialValues []int) (Board, error) {
 
 	board := boardStruct{false, cellFactory, []cells.IndividualCell{}}
 	for _, initialValue := range initialValues {
-		board.cells = append(board.cells, board.cellsFactory.NewCell(initialValue))
+		newCell, err := board.cellsFactory.NewCell(initialValue)
+		if(err != nil) {
+			return nil, err
+		}
+		board.cells = append(board.cells, newCell)
 	}
 	return &board, nil
 }
