@@ -200,7 +200,9 @@ func TestSolve(t *testing.T) {
 		6, 9, 5, 4, 1, 7, 3, 8, 2}
 
 	for i, element := range solvedEasyBoardExpectedResult {
-		assert.Equal(t, element, solvedEasyBoard.GetCell(i).GetCellValue())
+		cell, err := solvedEasyBoard.GetCell(i)
+		assert.Equal(t, element, cell.GetCellValue())
+		assert.Nil(t, err)
 	}
 
 	var hardSudoku = []int{
@@ -234,7 +236,9 @@ func TestSolve(t *testing.T) {
 		3, 4, 9, 1, 2, 8, 7, 6, 5}
 
 	for i, element := range solvedHardBoardExpectedResult {
-		assert.Equal(t, element, solvedHardBoard.GetCell(i).GetCellValue())
+		cell, err := solvedEasyBoard.GetCell(i)
+		assert.Equal(t, element, cell.GetCellValue())
+		assert.Nil(t, err)
 	}
 
 }

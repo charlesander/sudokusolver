@@ -36,7 +36,7 @@ func CheckValid(board boards.Board, index int) (bool, error) {
 		return false, err
 	}
 	vertical, err := CheckVertical(board, index)
-	if(err != nil) {
+	if err != nil {
 		return false, err
 	}
 	nineSquares, err := CheckNineSquares(board, index)
@@ -67,7 +67,7 @@ func ExtractNineSquares(board boards.Board, index int) ([]int, error) {
 	if err != nil {
 		return nil, err
 	}
-	return GetSudokuSquareValues(board, squareIndexes), nil
+	return GetSudokuSquareValues(board, squareIndexes)
 }
 
 func GetSudokuSquareIndexes(board boards.Board, index int) ([]int, error) {
@@ -105,12 +105,16 @@ func GetSudokuSquareIndexes(board boards.Board, index int) ([]int, error) {
 	}
 }
 
-func GetSudokuSquareValues(board boards.Board, squareIndex []int) []int {
+func GetSudokuSquareValues(board boards.Board, squareIndex []int) ([]int, error) {
 	squareValues := []int{}
 	for _, i := range squareIndex {
-		squareValues = append(squareValues, board.GetCell(i).GetCellValue())
+		cell, err := board.GetCell(i)
+		if err != nil {
+			return nil, err
+		}
+		squareValues = append(squareValues, cell.GetCellValue())
 	}
-	return squareValues
+	return squareValues, nil
 }
 
 func CheckHorizontal(board boards.Board, index int) (bool, error) {
@@ -167,7 +171,11 @@ func ExtractHorizontalRow(board boards.Board, index int) ([]int, error) {
 	}
 
 	for i := start; i <= end; i++ {
-		row = append(row, board.GetCell(i).GetCellValue())
+		cell, err := board.GetCell(i)
+		if err != nil {
+			return nil, err
+		}
+		row = append(row, cell.GetCellValue())
 	}
 	return row, nil
 }
@@ -181,12 +189,16 @@ func GetVerticalOffset(index int) (int, error) {
 
 func CheckVertical(board boards.Board, index int) (bool, error) {
 	currentOffset, err := GetVerticalOffset(index)
-	if(err != nil) {
+	if err != nil {
 		return false, err
 	}
 	for i := 0; i <= currentOffset; i++ {
 		if i <= index {
-			if !utilties.AreSudokuValuesUnique(ExtractVerticalCol(board, i)) {
+			cols, err := ExtractVerticalCol(board, i);
+			if(err != nil) {
+				return false, err
+			}
+			if !utilties.AreSudokuValuesUnique(cols) {
 				return false, nil
 			}
 		} else {
@@ -196,17 +208,21 @@ func CheckVertical(board boards.Board, index int) (bool, error) {
 	return true, nil
 }
 
-func ExtractVerticalCol(board boards.Board, offset int) []int {
+func ExtractVerticalCol(board boards.Board, offset int) ([]int, error) {
 	if offset >= boards.CELL_COUNT || offset < 0 {
 		panic("Incorrect index supplied to ExtractHorizonalRow")
 	}
 	col := []int{}
 	i := offset % boards.BOARD_SIDE_LENGTH
 	for i < boards.CELL_COUNT {
-		col = append(col, board.GetCell(i).GetCellValue())
+		cell, err := board.GetCell(i)
+		if err != nil {
+			return nil, err
+		}
+		col = append(col, cell.GetCellValue())
 		i += boards.BOARD_SIDE_LENGTH
 	}
-	return col
+	return col, nil
 }
 
 func checkSquares(board boards.Board, index int) bool {
@@ -224,12 +240,16 @@ func Solve(board boards.Board) (boards.Board, error) {
 	i := 0
 	count := 0
 	for i < boards.CELL_COUNT {
-		if board.GetCell(i).GetCellType() == cells.PRESET_CELL_TYPE {
+		cell, err := board.GetCell(i)
+		if err != nil {
+			return nil, err
+		}
+		if cell.GetCellType() == cells.PRESET_CELL_TYPE {
 			//skip over preset cells (they're not set-able)
 			i++
 			continue
-		} else if board.GetCell(i).GetCellValue() == 0 {
-			board.GetCell(i).SetCellValue(1)
+		} else if cell.GetCellValue() == 0 {
+			cell.SetCellValue(1)
 		} else {
 
 			//
@@ -238,21 +258,25 @@ func Solve(board boards.Board) (boards.Board, error) {
 				return nil, err
 			} else if validCell {
 				i++
-			} else if board.GetCell(i).GetCellValue() == cells.MAX_CELL_VALUE {
+			} else if cell.GetCellValue() == cells.MAX_CELL_VALUE {
 				//We've tried all the valid values for this cell, time to backtrack
-				board.GetCell(i).SetCellValue(0)
+				cell.SetCellValue(0)
 				for {
 					//Continue backtracking if the cell is not settable or the cell value
 					// is not able to be incremented again
 					i--
-					if board.GetCell(i).GetCellType() == cells.SETTABLE_CELL_TYPE &&
-						board.GetCell(i).GetCellValue() != 9 {
-						board.GetCell(i).SetCellValue(board.GetCell(i).GetCellValue() + 1)
+					cell, err := board.GetCell(i)
+					if err != nil {
+						return nil, err
+					}
+					if cell.GetCellType() == cells.SETTABLE_CELL_TYPE &&
+						cell.GetCellValue() != 9 {
+						cell.SetCellValue(cell.GetCellValue() + 1)
 						break
 					}
 				}
 			} else {
-				board.GetCell(i).SetCellValue(board.GetCell(i).GetCellValue() + 1)
+				cell.SetCellValue(cell.GetCellValue() + 1)
 			}
 		}
 		count++

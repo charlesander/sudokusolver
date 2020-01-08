@@ -27,17 +27,20 @@ func TestBoardInitiation(t *testing.T) {
 
 	assert.Nil(t, err)
 
-	cell := board.GetCell(0)
+	cell, err := board.GetCell(0)
 	assert.Equal(t, cell.GetCellValue(), 0)
 	assert.Equal(t, cell.GetCellType(), "Settable")
+	assert.Nil(t, err)
 
-	cell2 := board.GetCell(2)
+	cell2, err := board.GetCell(2)
 	assert.Equal(t, cell2.GetCellValue(), 3)
 	assert.Equal(t, cell2.GetCellType(), "Preset")
+	assert.Nil(t, err)
 
-	cell3 := board.GetCell(17)
+	cell3, err := board.GetCell(17)
 	assert.Equal(t, cell3.GetCellValue(), 1)
 	assert.Equal(t, cell3.GetCellType(), "Preset")
+	assert.Nil(t, err)
 }
 
 func TestSettingCell(t *testing.T) {
@@ -62,20 +65,30 @@ func TestSettingCell(t *testing.T) {
 
 	//Correctly set a cell value for the settable cell
 	board.SetCellValue(0, 1)
-	assert.Equal(t, board.GetCell(0).GetCellValue(), 1)
-	assert.Equal(t, board.GetCell(0).GetCellType(), "Settable")
+	cell, err := board.GetCell(0)
+	assert.Nil(t, err)
+	assert.Equal(t, cell.GetCellValue(), 1)
+	assert.Equal(t, cell.GetCellType(), "Settable")
 
 	board.SetCellValue(0, 2)
-	assert.Equal(t, board.GetCell(0).GetCellValue(), 2)
+	cell, err = board.GetCell(0)
+	assert.Nil(t, err)
+	assert.Equal(t, cell.GetCellValue(), 2)
 
 	board.SetCellValue(0, 3)
-	assert.Equal(t, board.GetCell(0).GetCellValue(), 3)
+	cell, err = board.GetCell(0)
+	assert.Nil(t, err)
+	assert.Equal(t, cell.GetCellValue(), 3)
 
 	board.SetCellValue(0, 5)
-	assert.Equal(t, board.GetCell(0).GetCellValue(), 5)
+	cell, err = board.GetCell(0)
+	assert.Nil(t, err)
+	assert.Equal(t, cell.GetCellValue(), 5)
 
 	board.SetCellValue(0, boards.BOARD_SIDE_LENGTH)
-	assert.Equal(t, board.GetCell(0).GetCellValue(), 9)
+	cell, err = board.GetCell(0)
+	assert.Nil(t, err)
+	assert.Equal(t, cell.GetCellValue(), 9)
 	//Fail setting a cell value for a settable cell
 
 	assert.Panics(t, func() {

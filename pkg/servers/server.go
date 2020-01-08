@@ -63,7 +63,11 @@ func handleSolve(w http.ResponseWriter, r *http.Request) {
 
 	values := []int{}
 	for i := 0; i < boards.CELL_COUNT; i++ {
-		values  = append(values, board.GetCell(i).GetCellValue())
+		cell, err := board.GetCell(i)
+		if(err != nil) {
+			//panic("TODO RETURN ERROR")
+		}
+		values  = append(values, cell.GetCellValue())
 	}
 	json.NewEncoder(w).Encode(values)
 

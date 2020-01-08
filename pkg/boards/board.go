@@ -14,8 +14,8 @@ type boardStruct struct {
 	cells        []cells.IndividualCell
 }
 type Board interface {
-	GetCell(index int) cells.IndividualCell
-	SetCellValue(index int, value int)
+	GetCell(index int) (cells.IndividualCell, error)
+	SetCellValue(index int, value int) (error)
 	GetCells() *[]cells.IndividualCell
 	SetComplete()
 	CheckComplete() bool
@@ -30,7 +30,7 @@ func NewBoard(cellFactory cells.Factory, initialValues []int) (Board, error) {
 	board := boardStruct{false, cellFactory, []cells.IndividualCell{}}
 	for _, initialValue := range initialValues {
 		newCell, err := board.cellsFactory.NewCell(initialValue)
-		if(err != nil) {
+		if err != nil {
 			return nil, err
 		}
 		board.cells = append(board.cells, newCell)
@@ -38,20 +38,28 @@ func NewBoard(cellFactory cells.Factory, initialValues []int) (Board, error) {
 	return &board, nil
 }
 
-func (b boardStruct) GetCell(index int) cells.IndividualCell {
+func (b boardStruct) GetCell(index int) (cells.IndividualCell, error) {
 	if index < 0 || index > CELL_COUNT {
-		panic("Invalid index used in GetCell()")
+		return nil, errors.New("Invalid index used in GetCell()")
 	}
-	return b.cells[index]
+	return b.cells[index], nil
 }
 
-func (b *boardStruct) SetCellValue(index int, newValue int) {
-	cells.ValidateCellValue(newValue)
-	if b.GetCell(index).GetCellType() == cells.SETTABLE_CELL_TYPE {
+func (b *boardStruct) SetCellValue(index int, newValue int) error {
+	err := cells.ValidateCellValue(newValue)
+	if err != nil {
+		return err
+	}
+	cell, err := b.GetCell(index);
+	if err != nil {
+		return err
+	}
+	if cell.GetCellType() == cells.SETTABLE_CELL_TYPE {
 		b.cells[index].SetCellValue(newValue)
 	} else {
-		panic("Attempting to set a value to a cell that already has a preset value")
+		return errors.New("Attempting to set a value to a cell that already has a preset value")
 	}
+	return nil
 }
 
 func (b boardStruct) GetCells() *[]cells.IndividualCell {

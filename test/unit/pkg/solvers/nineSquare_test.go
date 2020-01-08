@@ -343,57 +343,34 @@ func TestGetSudokuSquareValues(t *testing.T) {
 	// Top left
 	squareIndexes := []int{0,1,2,9,10,11,18,19,20}
 	expectedSquareValues := []int{9,5,7,4,8,3,6,1,2}
-	assert.Equal(t, expectedSquareValues, solvers.GetSudokuSquareValues(board, squareIndexes))
-	assert.Equal(t, expectedSquareValues, solvers.GetSudokuSquareValues(board, squareIndexes))
-	assert.Equal(t, expectedSquareValues, solvers.GetSudokuSquareValues(board, squareIndexes))
-	assert.Equal(t, expectedSquareValues, solvers.GetSudokuSquareValues(board, squareIndexes))
-	assert.Equal(t, expectedSquareValues, solvers.GetSudokuSquareValues(board, squareIndexes))
-	assert.Equal(t, expectedSquareValues, solvers.GetSudokuSquareValues(board, squareIndexes))
-	assert.Equal(t, expectedSquareValues, solvers.GetSudokuSquareValues(board, squareIndexes))
-	assert.Equal(t, expectedSquareValues, solvers.GetSudokuSquareValues(board, squareIndexes))
-	assert.Equal(t, expectedSquareValues, solvers.GetSudokuSquareValues(board, squareIndexes))
+
+	values, err := solvers.GetSudokuSquareValues(board, squareIndexes);
+	assert.Nil(t, err)
+	assert.Equal(t, expectedSquareValues, values)
 
 	// Top center
 	squareIndexes = []int{3,4,5,12,13,14,21,22,23}
 	expectedSquareValues = []int{6,1,3,2,5,7,8,4,9}
 
-	assert.Equal(t, expectedSquareValues, solvers.GetSudokuSquareValues(board, squareIndexes))
-	assert.Equal(t, expectedSquareValues, solvers.GetSudokuSquareValues(board, squareIndexes))
-	assert.Equal(t, expectedSquareValues, solvers.GetSudokuSquareValues(board, squareIndexes))
-	assert.Equal(t, expectedSquareValues, solvers.GetSudokuSquareValues(board, squareIndexes))
-	assert.Equal(t, expectedSquareValues, solvers.GetSudokuSquareValues(board, squareIndexes))
-	assert.Equal(t, expectedSquareValues, solvers.GetSudokuSquareValues(board, squareIndexes))
-	assert.Equal(t, expectedSquareValues, solvers.GetSudokuSquareValues(board, squareIndexes))
-	assert.Equal(t, expectedSquareValues, solvers.GetSudokuSquareValues(board, squareIndexes))
-	assert.Equal(t, expectedSquareValues, solvers.GetSudokuSquareValues(board, squareIndexes))
+	values, err = solvers.GetSudokuSquareValues(board, squareIndexes);
+	assert.Nil(t, err)
+	assert.Equal(t, expectedSquareValues, values)
 
 	// Top right
 	squareIndexes = []int{6,7,8,15,16,17,24,25,26}
 	expectedSquareValues = []int{2,8,4,1,9,6,5,3,7}
 
-	assert.Equal(t, expectedSquareValues, solvers.GetSudokuSquareValues(board, squareIndexes))
-	assert.Equal(t, expectedSquareValues, solvers.GetSudokuSquareValues(board, squareIndexes))
-	assert.Equal(t, expectedSquareValues, solvers.GetSudokuSquareValues(board, squareIndexes))
-	assert.Equal(t, expectedSquareValues, solvers.GetSudokuSquareValues(board, squareIndexes))
-	assert.Equal(t, expectedSquareValues, solvers.GetSudokuSquareValues(board, squareIndexes))
-	assert.Equal(t, expectedSquareValues, solvers.GetSudokuSquareValues(board, squareIndexes))
-	assert.Equal(t, expectedSquareValues, solvers.GetSudokuSquareValues(board, squareIndexes))
-	assert.Equal(t, expectedSquareValues, solvers.GetSudokuSquareValues(board, squareIndexes))
-	assert.Equal(t, expectedSquareValues, solvers.GetSudokuSquareValues(board, squareIndexes))
+	values, err = solvers.GetSudokuSquareValues(board, squareIndexes);
+	assert.Nil(t, err)
+	assert.Equal(t, expectedSquareValues, values)
 
 	// Bottom right
 	squareIndexes = []int{60,61,62,69,70,71,78,79,80}
 	expectedSquareValues = []int{6,1,3,8,7,5,4,2,9}
 
-	assert.Equal(t, expectedSquareValues, solvers.GetSudokuSquareValues(board, squareIndexes))
-	assert.Equal(t, expectedSquareValues, solvers.GetSudokuSquareValues(board, squareIndexes))
-	assert.Equal(t, expectedSquareValues, solvers.GetSudokuSquareValues(board, squareIndexes))
-	assert.Equal(t, expectedSquareValues, solvers.GetSudokuSquareValues(board, squareIndexes))
-	assert.Equal(t, expectedSquareValues, solvers.GetSudokuSquareValues(board, squareIndexes))
-	assert.Equal(t, expectedSquareValues, solvers.GetSudokuSquareValues(board, squareIndexes))
-	assert.Equal(t, expectedSquareValues, solvers.GetSudokuSquareValues(board, squareIndexes))
-	assert.Equal(t, expectedSquareValues, solvers.GetSudokuSquareValues(board, squareIndexes))
-	assert.Equal(t, expectedSquareValues, solvers.GetSudokuSquareValues(board, squareIndexes))
+	values, err = solvers.GetSudokuSquareValues(board, squareIndexes);
+	assert.Nil(t, err)
+	assert.Equal(t, expectedSquareValues, values)
 
 	squareIndexes = []int{6,1,83}
 	// Out of expected range error

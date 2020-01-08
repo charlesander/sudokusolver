@@ -401,51 +401,97 @@ func TestExtractVerticalCol(t *testing.T) {
 	assert.Nil(t, err)
 
 	expectedCol := []int{9, 4, 6, 1, 5, 3, 8, 2, 7}
-	assert.Equal(t, expectedCol, solvers.ExtractVerticalCol(board, 0))
+	cols, err := solvers.ExtractVerticalCol(board, 0);
+	assert.Nil(t, err)
+	assert.Equal(t, expectedCol, cols)
 	expectedCol = []int{5, 8, 1, 7, 2, 6, 4, 9, 3}
-	assert.Equal(t, expectedCol, solvers.ExtractVerticalCol(board, 1))
+	cols, err = solvers.ExtractVerticalCol(board, 1);
+	assert.Nil(t, err)
+	assert.Equal(t, expectedCol, cols)
 	expectedCol = []int{7, 3, 2, 8, 4, 9, 5, 1, 6}
-	assert.Equal(t, expectedCol, solvers.ExtractVerticalCol(board, 2))
+	cols, err = solvers.ExtractVerticalCol(board, 2);
+	assert.Nil(t, err)
+	assert.Equal(t, expectedCol, cols)
 	expectedCol = []int{6, 2, 8, 3, 9, 5, 7, 4, 1}
-	assert.Equal(t, expectedCol, solvers.ExtractVerticalCol(board, 3))
+	cols, err = solvers.ExtractVerticalCol(board, 3);
+	assert.Nil(t, err)
+	assert.Equal(t, expectedCol, cols)
 	expectedCol = []int{1, 5, 4, 6, 7, 2, 9, 3, 8}
-	assert.Equal(t, expectedCol, solvers.ExtractVerticalCol(board, 4))
+	cols, err = solvers.ExtractVerticalCol(board, 4);
+	assert.Nil(t, err)
+	assert.Equal(t, expectedCol, cols)
 	expectedCol = []int{3, 7, 9, 4, 1, 8, 2, 6, 5}
-	assert.Equal(t, expectedCol, solvers.ExtractVerticalCol(board, 5))
+	cols, err = solvers.ExtractVerticalCol(board, 5);
+	assert.Nil(t, err)
+	assert.Equal(t, expectedCol, cols)
 	expectedCol = []int{2, 1, 5, 9, 3, 7, 6, 8, 4}
-	assert.Equal(t, expectedCol, solvers.ExtractVerticalCol(board, 6))
+	cols, err = solvers.ExtractVerticalCol(board, 6);
+	assert.Nil(t, err)
+	assert.Equal(t, expectedCol, cols)
 	expectedCol = []int{8, 9, 3, 5, 6, 4, 1, 7, 2}
-	assert.Equal(t, expectedCol, solvers.ExtractVerticalCol(board, 7))
+	cols, err = solvers.ExtractVerticalCol(board, 7);
+	assert.Nil(t, err)
+	assert.Equal(t, expectedCol, cols)
 	expectedCol = []int{4, 6, 7, 2, 8, 1, 3, 5, 9}
-	assert.Equal(t, expectedCol, solvers.ExtractVerticalCol(board, 8))
+	cols, err = solvers.ExtractVerticalCol(board, 8);
+	assert.Nil(t, err)
+	assert.Equal(t, expectedCol, cols)
 	expectedCol = []int{9, 4, 6, 1, 5, 3, 8, 2, 7}
-	assert.Equal(t, expectedCol, solvers.ExtractVerticalCol(board, 9))
+	cols, err = solvers.ExtractVerticalCol(board, 9);
+	assert.Nil(t, err)
+	assert.Equal(t, expectedCol, cols)
 	expectedCol = []int{5, 8, 1, 7, 2, 6, 4, 9, 3}
-	assert.Equal(t, expectedCol, solvers.ExtractVerticalCol(board, 10))
+	cols, err = solvers.ExtractVerticalCol(board, 10);
+	assert.Nil(t, err)
+	assert.Equal(t, expectedCol, cols)
 	expectedCol = []int{7, 3, 2, 8, 4, 9, 5, 1, 6}
-	assert.Equal(t, expectedCol, solvers.ExtractVerticalCol(board, 11))
+	cols, err = solvers.ExtractVerticalCol(board, 11);
+	assert.Nil(t, err)
+	assert.Equal(t, expectedCol, cols)
 	expectedCol = []int{6, 2, 8, 3, 9, 5, 7, 4, 1}
-	assert.Equal(t, expectedCol, solvers.ExtractVerticalCol(board, 12))
+	cols, err = solvers.ExtractVerticalCol(board, 12);
+	assert.Nil(t, err)
+	assert.Equal(t, expectedCol, cols)
 	expectedCol = []int{1, 5, 4, 6, 7, 2, 9, 3, 8}
-	assert.Equal(t, expectedCol, solvers.ExtractVerticalCol(board, 13))
+	cols, err = solvers.ExtractVerticalCol(board, 13);
+	assert.Nil(t, err)
+	assert.Equal(t, expectedCol, cols)
 	expectedCol = []int{3, 7, 9, 4, 1, 8, 2, 6, 5}
-	assert.Equal(t, expectedCol, solvers.ExtractVerticalCol(board, 14))
+	cols, err = solvers.ExtractVerticalCol(board, 14);
+	assert.Nil(t, err)
+	assert.Equal(t, expectedCol, cols)
 	expectedCol = []int{2, 1, 5, 9, 3, 7, 6, 8, 4}
-	assert.Equal(t, expectedCol, solvers.ExtractVerticalCol(board, 15))
+	cols, err = solvers.ExtractVerticalCol(board, 15);
+	assert.Nil(t, err)
+	assert.Equal(t, expectedCol, cols)
 	expectedCol = []int{8, 9, 3, 5, 6, 4, 1, 7, 2}
-	assert.Equal(t, expectedCol, solvers.ExtractVerticalCol(board, 16))
+	cols, err = solvers.ExtractVerticalCol(board, 16);
+	assert.Nil(t, err)
+	assert.Equal(t, expectedCol, cols)
 	expectedCol = []int{4, 6, 7, 2, 8, 1, 3, 5, 9}
-	assert.Equal(t, expectedCol, solvers.ExtractVerticalCol(board, 17))
+	cols, err = solvers.ExtractVerticalCol(board, 17);
+	assert.Nil(t, err)
+	assert.Equal(t, expectedCol, cols)
 	expectedCol = []int{9, 4, 6, 1, 5, 3, 8, 2, 7}
-	assert.Equal(t, expectedCol, solvers.ExtractVerticalCol(board, 18))
+	cols, err = solvers.ExtractVerticalCol(board, 18);
+	assert.Nil(t, err)
+	assert.Equal(t, expectedCol, cols)
 	expectedCol = []int{5, 8, 1, 7, 2, 6, 4, 9, 3}
-	assert.Equal(t, expectedCol, solvers.ExtractVerticalCol(board, 19))
+	cols, err = solvers.ExtractVerticalCol(board, 19);
+	assert.Nil(t, err)
+	assert.Equal(t, expectedCol, cols)
 	expectedCol = []int{7, 3, 2, 8, 4, 9, 5, 1, 6}
-	assert.Equal(t, expectedCol, solvers.ExtractVerticalCol(board, 20))
+	cols, err = solvers.ExtractVerticalCol(board, 20);
+	assert.Nil(t, err)
+	assert.Equal(t, expectedCol, cols)
 	expectedCol = []int{6, 2, 8, 3, 9, 5, 7, 4, 1}
-	assert.Equal(t, expectedCol, solvers.ExtractVerticalCol(board, 21))
+	cols, err = solvers.ExtractVerticalCol(board, 21);
+	assert.Nil(t, err)
+	assert.Equal(t, expectedCol, cols)
 	expectedCol = []int{4, 6, 7, 2, 8, 1, 3, 5, 9}
-	assert.Equal(t, expectedCol, solvers.ExtractVerticalCol(board, 80))
+	cols, err = solvers.ExtractVerticalCol(board, 80);
+	assert.Nil(t, err)
+	assert.Equal(t, expectedCol, cols)
 
 	// Out of allowed range values
 	assert.Panics(t, func() {
