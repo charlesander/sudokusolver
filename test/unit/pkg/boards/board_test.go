@@ -23,7 +23,9 @@ func TestBoardInitiation(t *testing.T) {
 		0, 0, 5, 0, 1, 0, 3, 0, 0,
 	}
 
-	board := boards.NewBoard(cells.NewFactory(), easySudoku)
+	board, err := boards.NewBoard(cells.NewFactory(), easySudoku)
+
+	assert.Nil(t, err)
 
 	cell := board.GetCell(0)
 	assert.Equal(t, cell.GetCellValue(), 0)
@@ -54,7 +56,9 @@ func TestSettingCell(t *testing.T) {
 		0, 0, 5, 0, 1, 0, 3, 0, 0,
 	}
 
-	board := boards.NewBoard(cells.NewFactory(), easySudoku)
+	board, err := boards.NewBoard(cells.NewFactory(), easySudoku)
+
+	assert.Nil(t, err)
 
 	//Correctly set a cell value for the settable cell
 	board.SetCellValue(0, 1)
@@ -118,7 +122,9 @@ func TestGetCells(t *testing.T) {
 		cells = append(cells, cellFactory.NewCell(initialValue))
 	}
 
-	board := boards.NewBoard(cellFactory, easySudoku)
+	board, err := boards.NewBoard(cellFactory, easySudoku)
+
+	assert.Nil(t, err)
 
 	assert.Equal(t, cellsP, board.GetCells())
 }
@@ -138,7 +144,9 @@ func TestSetComplete(t *testing.T) {
 		0, 0, 5, 0, 1, 0, 3, 0, 0,
 	}
 
-	board := boards.NewBoard(cells.NewFactory(), easySudoku)
+	board, err := boards.NewBoard(cells.NewFactory(), easySudoku)
+
+	assert.Nil(t, err)
 	assert.False(t, board.CheckComplete())
 	board.SetComplete()
 	assert.True(t, board.CheckComplete())
@@ -159,7 +167,9 @@ func TestCheckComplete(t *testing.T) {
 		0, 0, 5, 0, 1, 0, 3, 0, 0,
 	}
 
-	board := boards.NewBoard(cells.NewFactory(), easySudoku)
+	board, err := boards.NewBoard(cells.NewFactory(), easySudoku)
+
+	assert.Nil(t, err)
 	assert.False(t, board.CheckComplete())
 	board.SetComplete()
 	assert.True(t, board.CheckComplete())

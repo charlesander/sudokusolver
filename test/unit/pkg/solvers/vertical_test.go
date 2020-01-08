@@ -19,7 +19,9 @@ func TestCheckVerticalWithCompletedSudokuNoDuplicates(t *testing.T) {
 		8,4,5,7,9,2,6,1,3,
 		2,9,1,4,3,6,8,7,5,
 		7,3,6,1,8,5,4,2,9}
-	board := board.NewBoard(cells.NewFactory(), complededSudoku)
+	board, err := board.NewBoard(cells.NewFactory(), complededSudoku)
+
+	assert.Nil(t, err)
 
 	assert.True(t, solvers.CheckVertical(board, 0))
 	assert.True(t, solvers.CheckVertical(board, 1))
@@ -44,7 +46,9 @@ func TestCheckCheckVerticalWithDuplicateOnCol1(t *testing.T) {
 		8,4,5,7,9,2,6,1,3,
 		2,9,1,4,3,6,8,7,5,
 		7,3,6,1,8,5,4,2,9}
-	board := board.NewBoard(cells.NewFactory(), complededSudoku)
+	board, err := board.NewBoard(cells.NewFactory(), complededSudoku)
+
+	assert.Nil(t, err)
 
 	assert.True(t, solvers.CheckVertical(board, 0))
 	assert.False(t, solvers.CheckVertical(board, 1))
@@ -85,7 +89,9 @@ func TestCheckCheckVerticalWithDuplicateOnCol5(t *testing.T) {
 		8,4,5,7,9,2,6,1,3,
 		2,9,1,4,3,6,8,7,5,
 		7,3,6,1,8,5,4,2,9}
-	board := board.NewBoard(cells.NewFactory(), complededSudoku)
+	board, err := board.NewBoard(cells.NewFactory(), complededSudoku)
+
+	assert.Nil(t, err)
 
 	assert.True(t, solvers.CheckVertical(board, 0))
 	assert.True(t, solvers.CheckVertical(board, 1))
@@ -126,7 +132,9 @@ func TestCheckCheckVerticalWithDuplicateOnCol7(t *testing.T) {
 		8,4,5,7,9,2,6,1,3,
 		2,9,1,4,3,6,8,7,5,
 		7,3,6,1,8,5,4,2,9}
-	board := board.NewBoard(cells.NewFactory(), complededSudoku)
+	board, err := board.NewBoard(cells.NewFactory(), complededSudoku)
+
+	assert.Nil(t, err)
 
 	assert.True(t, solvers.CheckVertical(board, 0))
 	assert.True(t, solvers.CheckVertical(board, 1))
@@ -167,7 +175,9 @@ func TestCheckCheckVerticalWithDuplicateOnCol0(t *testing.T) {
 		8,4,5,7,9,2,6,1,3,
 		2,9,1,4,3,6,8,7,5,
 		7,3,6,1,8,5,4,2,9}
-	board := board.NewBoard(cells.NewFactory(), complededSudoku)
+	board, err := board.NewBoard(cells.NewFactory(), complededSudoku)
+
+	assert.Nil(t, err)
 
 	assert.False(t, solvers.CheckVertical(board, 0))
 	assert.False(t, solvers.CheckVertical(board, 1))
@@ -207,7 +217,9 @@ func TestExtractVerticalCol(t *testing.T) {
 		8, 4, 5, 7, 9, 2, 6, 1, 3,
 		2, 9, 1, 4, 3, 6, 8, 7, 5,
 		7, 3, 6, 1, 8, 5, 4, 2, 9}
-	board := board.NewBoard(cells.NewFactory(), complededSudoku)
+	board, err := board.NewBoard(cells.NewFactory(), complededSudoku)
+
+	assert.Nil(t, err)
 
 	expectedCol := []int{9, 4, 6, 1, 5, 3, 8, 2, 7}
 	assert.Equal(t, expectedCol, solvers.ExtractVerticalCol(board, 0))

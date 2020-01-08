@@ -53,7 +53,10 @@ func handleSolve(w http.ResponseWriter, r *http.Request) {
 		intCellValues = utilties.ConvertStringSliceToIntSlice(stringCellValues)
 	}
 
-	board := boards.NewBoard(cells.NewFactory(), intCellValues)
+	board, err := boards.NewBoard(cells.NewFactory(), intCellValues)
+	if(err != nil) {
+		panic("TODO RETURN ERROR")
+	}
 	solvers.Solve(board)
 
 	values := []int{}

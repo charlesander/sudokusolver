@@ -1,6 +1,7 @@
 package boards
 
 import (
+	"errors"
 	"sudokusolver/pkg/cells"
 )
 
@@ -20,17 +21,17 @@ type Board interface {
 	CheckComplete() bool
 }
 
-func NewBoard(cellFactory cells.Factory, initialValues []int) Board {
+func NewBoard(cellFactory cells.Factory, initialValues []int) (Board, error) {
 
 	if len(initialValues) != CELL_COUNT {
-		panic("Invalid number of sudoku values provided")
+		return nil, errors.New("Invalid number of sudoku values provided")
 	}
 
 	board := boardStruct{false, cellFactory, []cells.IndividualCell{}}
 	for _, initialValue := range initialValues {
 		board.cells = append(board.cells, board.cellsFactory.NewCell(initialValue))
 	}
-	return &board
+	return &board, nil
 }
 
 func (b boardStruct) GetCell(index int) cells.IndividualCell {

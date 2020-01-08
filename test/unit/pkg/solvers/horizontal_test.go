@@ -19,7 +19,9 @@ func TestCheckHorizonalWithCompletedSudokuNoDuplicates(t *testing.T) {
 		8,4,5,7,9,2,6,1,3,
 		2,9,1,4,3,6,8,7,5,
 		7,3,6,1,8,5,4,2,9}
-	board := board.NewBoard(cells.NewFactory(), complededSudoku)
+	board, err := board.NewBoard(cells.NewFactory(), complededSudoku)
+
+	assert.Nil(t, err)
 
 	assert.True(t, solvers.CheckHorizontal(board, 0))
 	assert.True(t, solvers.CheckHorizontal(board, 1))
@@ -45,7 +47,9 @@ func TestCheckHorizonalWithDuplicateOnRow1(t *testing.T) {
 		8,4,5,7,9,2,6,1,3,
 		2,9,1,4,3,6,8,7,5,
 		7,3,6,1,8,5,4,2,9}
-	board := board.NewBoard(cells.NewFactory(), complededSudoku)
+	board, err := board.NewBoard(cells.NewFactory(), complededSudoku)
+
+	assert.Nil(t, err)
 
 	assert.False(t, solvers.CheckHorizontal(board, 0))
 	assert.False(t, solvers.CheckHorizontal(board, 1))
@@ -80,7 +84,9 @@ func TestCheckHorizonalWithDuplicateOnRow5(t *testing.T) {
 		8,4,5,7,9,2,6,1,3,
 		2,9,1,4,3,6,8,7,5,
 		7,3,6,1,8,5,4,2,9}
-	board := board.NewBoard(cells.NewFactory(), complededSudoku)
+	board, err := board.NewBoard(cells.NewFactory(), complededSudoku)
+
+	assert.Nil(t, err)
 
 	assert.True(t, solvers.CheckHorizontal(board, 0))
 	assert.True(t, solvers.CheckHorizontal(board, 1))
@@ -108,7 +114,9 @@ func TestCheckHorizonalWithDuplicateOnRow9(t *testing.T) {
 		2,9,1,4,3,6,8,7,5,
 		//7,3,6,1,8,5,4,2,9
 		7,3,6,1,8,5,4,2,7}
-	board := board.NewBoard(cells.NewFactory(), complededSudoku)
+	board, err := board.NewBoard(cells.NewFactory(), complededSudoku)
+
+	assert.Nil(t, err)
 
 	assert.True(t, solvers.CheckHorizontal(board, 0))
 	assert.True(t, solvers.CheckHorizontal(board, 1))
@@ -141,7 +149,9 @@ func TestExtractHorizontalRow(t *testing.T) {
 		8, 0, 0, 2, 0, 3, 0, 0, 0,
 		0, 0, 5, 0, 1, 0, 3, 0, 0,
 	}
-	board := board.NewBoard(cells.NewFactory(), easySudoku)
+	board, err := board.NewBoard(cells.NewFactory(), easySudoku)
+
+	assert.Nil(t, err)
 
 	// extract 1st row
 

@@ -22,7 +22,7 @@ func TestCheckBoardHasValidLayout(t *testing.T) {
 		8, 0, 0, 2, 0, 3, 0, 0, 0,
 		0, 0, 5, 0, 1, 0, 3, 0, 0,
 	}
-	board := boards.NewBoard(cells.NewFactory(), easySudoku)
+	board, err := boards.NewBoard(cells.NewFactory(), easySudoku)
 	assert.True(t, solvers.CheckBoardHasValidLayout(board))
 
 	var brokenSudoku = []int{
@@ -38,7 +38,10 @@ func TestCheckBoardHasValidLayout(t *testing.T) {
 		8, 0, 0, 2, 0, 3, 0, 0, 0,
 		0, 0, 5, 0, 1, 0, 3, 0, 0,
 	}
-	brokenBoard := boards.NewBoard(cells.NewFactory(), brokenSudoku)
+	brokenBoard, err := boards.NewBoard(cells.NewFactory(), brokenSudoku)
+
+	assert.Nil(t, err)
+
 	assert.False(t, solvers.CheckBoardHasValidLayout(brokenBoard))
 
 	var hardSudoku2 = []int{
@@ -54,7 +57,10 @@ func TestCheckBoardHasValidLayout(t *testing.T) {
 		0, 2, 0, 0, 4, 7, 8, 9, 3,
 		0, 4, 9, 0, 0, 0, 0, 9, 5,
 	}
-	brokenBoard2 := boards.NewBoard(cells.NewFactory(), hardSudoku2)
+	brokenBoard2, err := boards.NewBoard(cells.NewFactory(), hardSudoku2)
+
+	assert.Nil(t, err)
+
 	assert.False(t, solvers.CheckBoardHasValidLayout(brokenBoard2))
 }
 func TestCheckValidWithDuplicate(t *testing.T) {
@@ -72,7 +78,10 @@ func TestCheckValidWithDuplicate(t *testing.T) {
 		0, 0, 5, 0, 1, 0, 3, 0, 0,
 	}
 
-	board := boards.NewBoard(cells.NewFactory(), easySudoku)
+	board, err := boards.NewBoard(cells.NewFactory(), easySudoku)
+
+	assert.Nil(t, err)
+
 	assert.True(t, solvers.CheckValid(board, 0))
 	assert.True(t, solvers.CheckValid(board, 10))
 	assert.True(t, solvers.CheckValid(board, 20))
@@ -99,7 +108,10 @@ func TestCheckValid(t *testing.T) {
 		0, 0, 5, 0, 1, 0, 3, 0, 0,
 	}
 
-	board := boards.NewBoard(cells.NewFactory(), easySudoku)
+	board, err := boards.NewBoard(cells.NewFactory(), easySudoku)
+
+	assert.Nil(t, err)
+
 	assert.True(t, solvers.CheckValid(board, 0))
 	assert.True(t, solvers.CheckValid(board, 10))
 	assert.True(t, solvers.CheckValid(board, 20))
@@ -126,7 +138,9 @@ func TestSolve(t *testing.T) {
 		0, 0, 5, 0, 1, 0, 3, 0, 0,
 	}
 
-	easyBoard := boards.NewBoard(cells.NewFactory(), easySudoku)
+	easyBoard, err := boards.NewBoard(cells.NewFactory(), easySudoku)
+
+	assert.Nil(t, err)
 
 	solvedEasyBoard := solvers.Solve(easyBoard)
 
@@ -159,7 +173,7 @@ func TestSolve(t *testing.T) {
 		0, 4, 9, 0, 0, 0, 0, 0, 5,
 	}
 
-	hardBoard := boards.NewBoard(cells.NewFactory(), hardSudoku)
+	hardBoard, err := boards.NewBoard(cells.NewFactory(), hardSudoku)
 
 	solvedHardBoard := solvers.Solve(hardBoard)
 

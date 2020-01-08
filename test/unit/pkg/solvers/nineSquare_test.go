@@ -19,7 +19,9 @@ func TestCheckNineSquaresAllCorrectCells(t *testing.T) {
 		8,4,5,7,9,2,6,1,3,
 		2,9,1,4,3,6,8,7,5,
 		7,3,6,1,8,5,4,2,9}
-	board := boards.NewBoard(cells.NewFactory(), complededSudoku)
+	board, err := boards.NewBoard(cells.NewFactory(), complededSudoku)
+
+	assert.Nil(t, err)
 
 	assert.True(t, solvers.CheckNineSquares(board, 0))
 	assert.True(t, solvers.CheckNineSquares(board, 1))
@@ -60,7 +62,9 @@ func TestCheckNineSquaresDuplicateBottomRight(t *testing.T) {
 		8,4,5,7,9,2,6,1,3,
 		2,9,1,4,3,6,8,2,5,
 		7,3,6,1,8,5,4,2,9}
-	board := boards.NewBoard(cells.NewFactory(), complededSudoku)
+	board, err := boards.NewBoard(cells.NewFactory(), complededSudoku)
+
+	assert.Nil(t, err)
 
 	assert.True(t, solvers.CheckNineSquares(board, 0))
 	assert.True(t, solvers.CheckNineSquares(board, 1))
@@ -101,7 +105,9 @@ func TestCheckNineSquaresDuplicateTopRight(t *testing.T) {
 		8,4,5,7,9,2,6,1,3,
 		2,9,1,4,3,6,8,7,5,
 		7,3,6,1,8,5,4,2,9}
-	board := boards.NewBoard(cells.NewFactory(), complededSudoku)
+	board, err := boards.NewBoard(cells.NewFactory(), complededSudoku)
+
+	assert.Nil(t, err)
 
 	assert.False(t, solvers.CheckNineSquares(board, 0))
 	assert.False(t, solvers.CheckNineSquares(board, 1))
@@ -142,7 +148,9 @@ func TestGetSudokuSquareIndexes(t *testing.T) {
 		8,4,5,7,9,2,6,1,3,
 		2,9,1,4,3,6,8,7,5,
 		7,3,6,1,8,5,4,2,9}
-	board := boards.NewBoard(cells.NewFactory(), complededSudoku)
+	board, err := boards.NewBoard(cells.NewFactory(), complededSudoku)
+
+	assert.Nil(t, err)
 
 	expectedSquareIndexes := []int{0,1,2,9,10,11,18,19,20}
 
@@ -215,7 +223,9 @@ func TestGetSudokuSquareValues(t *testing.T) {
 		8,4,5,7,9,2,6,1,3,
 		2,9,1,4,3,6,8,7,5,
 		7,3,6,1,8,5,4,2,9}
-	board := boards.NewBoard(cells.NewFactory(), complededSudoku)
+	board, err := boards.NewBoard(cells.NewFactory(), complededSudoku)
+
+	assert.Nil(t, err)
 
 	// Top left
 	squareIndexes := []int{0,1,2,9,10,11,18,19,20}
@@ -296,7 +306,9 @@ func TestExtractNineSquares(t *testing.T) {
 		8,4,5,7,9,2,6,1,3,
 		2,9,1,4,3,6,8,7,5,
 		7,3,6,1,8,5,4,2,9}
-	board := boards.NewBoard(cells.NewFactory(), complededSudoku)
+	board, err := boards.NewBoard(cells.NewFactory(), complededSudoku)
+
+	assert.Nil(t, err)
 
 	// Top left
 	expectedSquare := []int{9,5,7,4,8,3,6,1,2}
