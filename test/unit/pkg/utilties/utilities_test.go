@@ -9,31 +9,36 @@ import (
 func TestConvertStringSliceToIntSlice(t *testing.T) {
 	original := []string{"1", "2", "3"}
 	expected := []int{1, 2, 3}
-	result := utilties.ConvertStringSliceToIntSlice(original)
+	result, err := utilties.ConvertStringSliceToIntSlice(original)
 	assert.Equal(t, expected, result)
+	assert.Nil(t, err)
 
 	original = []string{"-1", "-2", "-3"}
 	expected = []int{-1, -2, -3}
-	result = utilties.ConvertStringSliceToIntSlice(original)
+	result, err = utilties.ConvertStringSliceToIntSlice(original)
 	assert.Equal(t, expected, result)
+	assert.Nil(t, err)
 
-	assert.Panics(t, func() {
-		original = []string{"a", "b", "c"}
-		expected = []int{}
-		result = utilties.ConvertStringSliceToIntSlice(original)
-	})
+	//Errors occure
+	original = []string{"a", "b", "c"}
+	result, err = utilties.ConvertStringSliceToIntSlice(original)
+	assert.Nil(t, result)
+	assert.Error(t, err)
 
-	assert.Panics(t, func() {
-		original = []string{"arg1", "€", "驰馳"}
-		expected = []int{}
-		result = utilties.ConvertStringSliceToIntSlice(original)
-	})
+	original = []string{"a", "b", "c"}
+	result, err = utilties.ConvertStringSliceToIntSlice(original)
+	assert.Nil(t, result)
+	assert.Error(t, err)
 
-	assert.Panics(t, func() {
-		original = []string{""}
-		expected = []int{}
-		result = utilties.ConvertStringSliceToIntSlice(original)
-	})
+	original = []string{"arg1", "€", "驰馳"}
+	result, err = utilties.ConvertStringSliceToIntSlice(original)
+	assert.Nil(t, result)
+	assert.Error(t, err)
+
+	original = []string{""}
+	result, err = utilties.ConvertStringSliceToIntSlice(original)
+	assert.Nil(t, result)
+	assert.Error(t, err)
 }
 
 func TestStringInSlice(t *testing.T) {

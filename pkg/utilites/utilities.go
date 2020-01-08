@@ -5,18 +5,18 @@ import (
 	"strconv"
 )
 
-func ConvertStringSliceToIntSlice( stringSlice []string)  []int {
+func ConvertStringSliceToIntSlice( stringSlice []string)  ([]int, error) {
 	var intSlice = []int{}
 
 	for _, i := range stringSlice {
 		j, err := strconv.Atoi(i)
 		if err != nil {
-			panic(err)
+			return nil, err
 		}
 		intSlice = append(intSlice, j)
 	}
 
-	return intSlice
+	return intSlice, nil
 }
 
 func StringIntSlice(a string, list []string) bool {

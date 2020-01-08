@@ -46,11 +46,13 @@ func handleSolve(w http.ResponseWriter, r *http.Request) {
 
 	stringCellValues, ok := r.URL.Query()["cellValues[]"]
 	intCellValues := []int{}
+	var err error
 	if !ok  {
 		log.Println("Url Param 'cellValues[]' is missing")
 		return
 	} else {
-		intCellValues = utilties.ConvertStringSliceToIntSlice(stringCellValues)
+		intCellValues, err = utilties.ConvertStringSliceToIntSlice(stringCellValues)
+
 	}
 
 	board, err := boards.NewBoard(cells.NewFactory(), intCellValues)
