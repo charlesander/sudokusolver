@@ -54,7 +54,12 @@ func CheckNineSquares(board boards.Board, index int) (bool, error) {
 	if err != nil {
 		return false, err
 	}
-	return utilties.AreSudokuValuesUnique(values), nil
+	unique := utilties.AreSudokuValuesUnique(values)
+	if(!unique) {
+		return false, errors.New("Values in 3x3 square are not unique")
+	}
+
+	return true, nil
 }
 
 /**
@@ -126,7 +131,7 @@ func CheckHorizontal(board boards.Board, index int) (bool, error) {
 			}
 			areUnique := utilties.AreSudokuValuesUnique(horizontal)
 			if !areUnique {
-				return false, nil
+				return false, errors.New("Values in row are not unique")
 			}
 		} else {
 			continue
@@ -199,7 +204,7 @@ func CheckVertical(board boards.Board, index int) (bool, error) {
 				return false, err
 			}
 			if !utilties.AreSudokuValuesUnique(cols) {
-				return false, nil
+				return false, errors.New("Values in column are not unique")
 			}
 		} else {
 			continue
@@ -229,20 +234,20 @@ func checkSquares(board boards.Board, index int) bool {
 	return true
 }
 
-func Solve(board boards.Board) (boards.Board, error) {
+func Solve(board boards.Board) (bool, error) {
 	isValid, err := CheckBoardHasValidLayout(board)
 	if err != nil {
-		return nil, err
+		return false, err
 	}
 	if !isValid {
-		return nil, errors.New("Unsolvable board provided")
+		return false, errors.New("Unsolvable board provided")
 	}
 	i := 0
 	count := 0
 	for i < boards.CELL_COUNT {
 		cell, err := board.GetCell(i)
 		if err != nil {
-			return nil, err
+			return false, err
 		}
 		if cell.GetCellType() == cells.PRESET_CELL_TYPE {
 			//skip over preset cells (they're not set-able)
@@ -255,7 +260,7 @@ func Solve(board boards.Board) (boards.Board, error) {
 			//
 			validCell, _ := CheckValid(board, i)
 			if err != nil {
-				return nil, err
+				return false, err
 			} else if validCell {
 				i++
 			} else if cell.GetCellValue() == cells.MAX_CELL_VALUE {
@@ -267,7 +272,7 @@ func Solve(board boards.Board) (boards.Board, error) {
 					i--
 					cell, err := board.GetCell(i)
 					if err != nil {
-						return nil, err
+						return false, err
 					}
 					if cell.GetCellType() == cells.SETTABLE_CELL_TYPE &&
 						cell.GetCellValue() != 9 {
@@ -285,5 +290,5 @@ func Solve(board boards.Board) (boards.Board, error) {
 		}
 	}
 	board.SetComplete()
-	return board, nil
+	return true, nil
 }

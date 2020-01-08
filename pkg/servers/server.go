@@ -2,6 +2,7 @@ package servers
 
 import (
 	"encoding/json"
+	"errors"
 	"github.com/gorilla/mux"
 	"io"
 	"log"
@@ -12,6 +13,12 @@ import (
 	utilties "sudokusolver/pkg/utilites"
 	"time"
 )
+
+type ResponseTemplateStruct struct {
+	Complete bool
+	Message  string
+	Body     []int
+}
 
 func LaunchServer(router *mux.Router) {
 	srv := &http.Server{
@@ -47,28 +54,42 @@ func handleSolve(w http.ResponseWriter, r *http.Request) {
 	stringCellValues, ok := r.URL.Query()["cellValues[]"]
 	intCellValues := []int{}
 	var err error
-	if !ok  {
-		log.Println("Url Param 'cellValues[]' is missing")
+	if !ok {
+		displayError(w, errors.New("Url Param 'cellValues[]' is missing"))
 		return
 	} else {
 		intCellValues, err = utilties.ConvertStringSliceToIntSlice(stringCellValues)
-
 	}
 
 	board, err := boards.NewBoard(cells.NewFactory(), intCellValues)
-	if(err != nil) {
-		panic("TODO RETURN ERROR")
+	if err != nil {
+		displayError(w, err)
+		return
 	}
-	solvers.Solve(board)
-
+	ok, err = solvers.Solve(board)
+	if err != nil {
+		displayError(w, err)
+		return
+	} else if !ok {
+		displayError(w, errors.New("Unable to solve"))
+		return
+	}
 	values := []int{}
 	for i := 0; i < boards.CELL_COUNT; i++ {
 		cell, err := board.GetCell(i)
-		if(err != nil) {
-			//panic("TODO RETURN ERROR")
+		if err != nil {
+			displayError(w, err)
+			return
 		}
-		values  = append(values, cell.GetCellValue())
+		values = append(values, cell.GetCellValue())
 	}
-	json.NewEncoder(w).Encode(values)
 
+	var jsonResponse = ResponseTemplateStruct{true, "OK", values}
+
+	json.NewEncoder(w).Encode(jsonResponse)
+}
+
+func displayError(w http.ResponseWriter, err error) {
+	var jsonResponse = ResponseTemplateStruct{false, err.Error(), nil}
+	json.NewEncoder(w).Encode(jsonResponse)
 }
