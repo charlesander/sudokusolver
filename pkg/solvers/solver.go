@@ -17,24 +17,41 @@ import (
  * them in order to make the sudoku solvable. Checking the board with
  * this function can avert that scenario.
  */
-func CheckBoardHasValidLayout(board boards.Board) bool {
+func CheckBoardHasValidLayout(board boards.Board) (bool, error) {
 	for i := 0; i < boards.CELL_COUNT; i++ {
-		if !CheckValid(board, i) {
-			return false
+		valid, err := CheckValid(board, i)
+		if err != nil {
+			return false, err
+		}
+		if ! valid {
+			return false, nil
 		}
 	}
-	return true
+	return true, nil
 }
 
-func CheckValid(board boards.Board, index int) bool {
-	return CheckHorizontal(board, index) &&
-		CheckVertical(board, index) &&
-		CheckNineSquares(board, index)
+func CheckValid(board boards.Board, index int) (bool, error) {
+	horizontal, err := CheckHorizontal(board, index)
+	if err != nil {
+		return false, err
+	}
+	vertical := CheckVertical(board, index)
+	nineSquares, err := CheckNineSquares(board, index)
+	if err != nil {
+		return false, err
+	}
+	return (horizontal &&
+		vertical &&
+		nineSquares), err
 
 }
 
-func CheckNineSquares(board boards.Board, index int) bool {
-	return utilties.AreSudokuValuesUnique(ExtractNineSquares(board, index))
+func CheckNineSquares(board boards.Board, index int) (bool, error) {
+	values, err := ExtractNineSquares(board, index)
+	if err != nil {
+		return false, err
+	}
+	return utilties.AreSudokuValuesUnique(values), nil
 }
 
 /**
@@ -65,21 +82,21 @@ func GetSudokuSquareIndexes(board boards.Board, index int) ([]int, error) {
 	if utilties.IntInSlice(index, topLeftSquare) {
 		return topLeftSquare, nil
 	} else if utilties.IntInSlice(index, topCentreSquare) {
-		return topCentreSquare
+		return topCentreSquare, nil
 	} else if utilties.IntInSlice(index, topRightSquare) {
-		return topRightSquare
+		return topRightSquare, nil
 	} else if utilties.IntInSlice(index, middleLeftSquare) {
 		return middleLeftSquare, nil
 	} else if utilties.IntInSlice(index, middleCentreSquare) {
-		return middleCentreSquare
+		return middleCentreSquare, nil
 	} else if utilties.IntInSlice(index, middleRightSquare) {
-		return middleRightSquare
+		return middleRightSquare, nil
 	} else if utilties.IntInSlice(index, bottomLeftSquare) {
-		return bottomLeftSquare
+		return bottomLeftSquare, nil
 	} else if utilties.IntInSlice(index, bottomCentreSquare) {
-		return bottomCentreSquare
+		return bottomCentreSquare, nil
 	} else if utilties.IntInSlice(index, bottomRightSquare) {
-		return bottomRightSquare
+		return bottomRightSquare, nil
 	} else {
 		return nil, errors.New("Incorrect index supplied to GetSudokuSquareIndexes")
 	}
@@ -93,17 +110,22 @@ func GetSudokuSquareValues(board boards.Board, squareIndex []int) []int {
 	return squareValues
 }
 
-func CheckHorizontal(board boards.Board, index int) bool {
+func CheckHorizontal(board boards.Board, index int) (bool, error) {
 	for i := 0; i < boards.CELL_COUNT; i += boards.BOARD_SIDE_LENGTH {
 		if i <= index {
-			if !utilties.AreSudokuValuesUnique(ExtractHorizontalRow(board, i)) {
-				return false
+			horizontal, err := ExtractHorizontalRow(board, i)
+			if err != nil {
+				return false, err
+			}
+			areUnique := utilties.AreSudokuValuesUnique(horizontal)
+			if !areUnique {
+				return false, nil
 			}
 		} else {
 			continue
 		}
 	}
-	return true
+	return true, nil
 }
 
 func ExtractHorizontalRow(board boards.Board, index int) ([]int, error) {
@@ -138,7 +160,7 @@ func ExtractHorizontalRow(board boards.Board, index int) ([]int, error) {
 		start = 72
 		end = 80
 	} else {
-		return nil, Errors.New("Incorrect index supplied to ExtractHorizonalRow")
+		return nil, errors.New("Incorrect index supplied to ExtractHorizonalRow")
 	}
 
 	for i := start; i <= end; i++ {
@@ -185,9 +207,13 @@ func checkSquares(board boards.Board, index int) bool {
 	return true
 }
 
-func Solve(board boards.Board) boards.Board {
-	if !CheckBoardHasValidLayout(board) {
-		panic("Unsolvable board provided")
+func Solve(board boards.Board) (boards.Board, error) {
+	isValid, err := CheckBoardHasValidLayout(board)
+	if err != nil {
+		return nil, err
+	}
+	if !isValid {
+		return nil, errors.New("Unsolvable board provided")
 	}
 	i := 0
 	count := 0
@@ -198,23 +224,30 @@ func Solve(board boards.Board) boards.Board {
 			continue
 		} else if board.GetCell(i).GetCellValue() == 0 {
 			board.GetCell(i).SetCellValue(1)
-		} else if CheckValid(board, i) {
-			i++
-		} else if board.GetCell(i).GetCellValue() == cells.MAX_CELL_VALUE {
-			//We've tried all the valid values for this cell, time to backtrack
-			board.GetCell(i).SetCellValue(0)
-			for {
-				//Continue backtracking if the cell is not settable or the cell value
-				// is not able to be incremented again
-				i--
-				if board.GetCell(i).GetCellType() == cells.SETTABLE_CELL_TYPE &&
-					board.GetCell(i).GetCellValue() != 9 {
-					board.GetCell(i).SetCellValue(board.GetCell(i).GetCellValue() + 1)
-					break
-				}
-			}
 		} else {
-			board.GetCell(i).SetCellValue(board.GetCell(i).GetCellValue() + 1)
+
+			//
+			validCell, _ := CheckValid(board, i)
+			if err != nil {
+				return nil, err
+			} else if validCell {
+				i++
+			} else if board.GetCell(i).GetCellValue() == cells.MAX_CELL_VALUE {
+				//We've tried all the valid values for this cell, time to backtrack
+				board.GetCell(i).SetCellValue(0)
+				for {
+					//Continue backtracking if the cell is not settable or the cell value
+					// is not able to be incremented again
+					i--
+					if board.GetCell(i).GetCellType() == cells.SETTABLE_CELL_TYPE &&
+						board.GetCell(i).GetCellValue() != 9 {
+						board.GetCell(i).SetCellValue(board.GetCell(i).GetCellValue() + 1)
+						break
+					}
+				}
+			} else {
+				board.GetCell(i).SetCellValue(board.GetCell(i).GetCellValue() + 1)
+			}
 		}
 		count++
 		if count > 1000000 {
@@ -222,5 +255,5 @@ func Solve(board boards.Board) boards.Board {
 		}
 	}
 	board.SetComplete()
-	return board
+	return board, nil
 }

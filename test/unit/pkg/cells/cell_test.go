@@ -8,22 +8,22 @@ import (
 
 func TestCellInitiation(t *testing.T) {
 	cellFactory := cells.NewFactory()
-	cell := cellFactory.NewCell( 1);
+	cell, _ := cellFactory.NewCell( 1);
 	assert.Equal(t, cell.GetCellType(), "Preset")
 	assert.Equal(t, cell.GetCellValue(), 1)
 
-	cell2 := cellFactory.NewCell(9);
+	cell2, _ := cellFactory.NewCell(9);
 	assert.Equal(t, cell2.GetCellType(), "Preset")
 	assert.Equal(t, cell2.GetCellValue(), 9)
 
-	cell3 := cellFactory.NewCell(0);
+	cell3, _ := cellFactory.NewCell(0);
 	assert.Equal(t, cell3.GetCellType(), "Settable")
 	assert.Equal(t, cell3.GetCellValue(), 0)
 }
 
 func TestSetCellValue(t *testing.T) {
 	cellFactory := cells.NewFactory()
-	cell := cellFactory.NewCell( 1);
+	cell, _ := cellFactory.NewCell( 1);
 	cell.SetCellValue(2)
 	assert.Equal(t, cell.GetCellValue(), 2)
 }

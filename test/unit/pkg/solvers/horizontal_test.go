@@ -23,16 +23,37 @@ func TestCheckHorizonalWithCompletedSudokuNoDuplicates(t *testing.T) {
 
 	assert.Nil(t, err)
 
-	assert.True(t, solvers.CheckHorizontal(board, 0))
-	assert.True(t, solvers.CheckHorizontal(board, 1))
-	assert.True(t, solvers.CheckHorizontal(board, 10))
-	assert.True(t, solvers.CheckHorizontal(board, 20))
-	assert.True(t, solvers.CheckHorizontal(board, 30))
-	assert.True(t, solvers.CheckHorizontal(board, 40))
-	assert.True(t, solvers.CheckHorizontal(board, 50))
-	assert.True(t, solvers.CheckHorizontal(board, 60))
-	assert.True(t, solvers.CheckHorizontal(board, 70))
-	assert.True(t, solvers.CheckHorizontal(board, 80))
+	check, err := solvers.CheckHorizontal(board, 0)
+	assert.True(t, check)
+	assert.Nil(t, err)
+
+	check, err = solvers.CheckHorizontal(board, 1)
+	assert.True(t, check)
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 10)
+	assert.True(t, check)
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 20)
+	assert.True(t, check)
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 30)
+	assert.True(t, check)
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 40)
+	assert.True(t, check)
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 50)
+	assert.True(t, check)
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 60)
+	assert.True(t, check)
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 70)
+	assert.True(t, check)
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 80)
+	assert.True(t, check)
+	assert.Nil(t, err)
 }
 
 func TestCheckHorizonalWithDuplicateOnRow1(t *testing.T) {
@@ -51,25 +72,63 @@ func TestCheckHorizonalWithDuplicateOnRow1(t *testing.T) {
 
 	assert.Nil(t, err)
 
-	assert.False(t, solvers.CheckHorizontal(board, 0))
-	assert.False(t, solvers.CheckHorizontal(board, 1))
-	assert.False(t, solvers.CheckHorizontal(board, 2))
-	assert.False(t, solvers.CheckHorizontal(board, 3))
-	assert.False(t, solvers.CheckHorizontal(board, 1))
-	assert.False(t, solvers.CheckHorizontal(board, 6))
-	assert.False(t, solvers.CheckHorizontal(board, 7))
-	assert.False(t, solvers.CheckHorizontal(board, 8))
-	assert.False(t, solvers.CheckHorizontal(board, 9))
-	assert.False(t, solvers.CheckHorizontal(board, 10))
-	assert.False(t, solvers.CheckHorizontal(board, 20))
-	assert.False(t, solvers.CheckHorizontal(board, 30))
-	assert.False(t, solvers.CheckHorizontal(board, 40))
-	assert.False(t, solvers.CheckHorizontal(board, 50))
-	assert.False(t, solvers.CheckHorizontal(board, 60))
-	assert.False(t, solvers.CheckHorizontal(board, 70))
-	assert.False(t, solvers.CheckHorizontal(board, 80))
-	assert.False(t, solvers.CheckHorizontal(board, 81))
-
+	check, err := solvers.CheckHorizontal(board, 0)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 1)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 2)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 3)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 4)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 5)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 6)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 7)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 8)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 9)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 10)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 20)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 30)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 40)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 50)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 60)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 70)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 80)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 81)
+	assert.False(t, check);
+	assert.Nil(t, err)
 }
 
 func TestCheckHorizonalWithDuplicateOnRow5(t *testing.T) {
@@ -88,18 +147,63 @@ func TestCheckHorizonalWithDuplicateOnRow5(t *testing.T) {
 
 	assert.Nil(t, err)
 
-	assert.True(t, solvers.CheckHorizontal(board, 0))
-	assert.True(t, solvers.CheckHorizontal(board, 1))
-	assert.True(t, solvers.CheckHorizontal(board, 10))
-	assert.True(t, solvers.CheckHorizontal(board, 20))
-	assert.True(t, solvers.CheckHorizontal(board, 35))
-	// we're now reaching the erronious row, so it should now fail
-	assert.False(t, solvers.CheckHorizontal(board, 36))
-	assert.False(t, solvers.CheckHorizontal(board, 40))
-	assert.False(t, solvers.CheckHorizontal(board, 50))
-	assert.False(t, solvers.CheckHorizontal(board, 65))
-	assert.False(t, solvers.CheckHorizontal(board, 70))
-	assert.False(t, solvers.CheckHorizontal(board, 80))
+	check, err := solvers.CheckHorizontal(board, 0)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 1)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 2)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 3)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 4)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 5)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 6)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 7)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 8)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 9)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 10)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 20)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 30)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 40)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 50)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 60)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 70)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 80)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 81)
+	assert.False(t, check);
+	assert.Nil(t, err)
 }
 
 func TestCheckHorizonalWithDuplicateOnRow9(t *testing.T) {
@@ -118,21 +222,63 @@ func TestCheckHorizonalWithDuplicateOnRow9(t *testing.T) {
 
 	assert.Nil(t, err)
 
-	assert.True(t, solvers.CheckHorizontal(board, 0))
-	assert.True(t, solvers.CheckHorizontal(board, 1))
-	assert.True(t, solvers.CheckHorizontal(board, 10))
-	assert.True(t, solvers.CheckHorizontal(board, 20))
-	assert.True(t, solvers.CheckHorizontal(board, 35))
-
-	assert.True(t, solvers.CheckHorizontal(board, 36))
-	assert.True(t, solvers.CheckHorizontal(board, 40))
-	assert.True(t, solvers.CheckHorizontal(board, 50))
-	assert.True(t, solvers.CheckHorizontal(board, 65))
-	assert.True(t, solvers.CheckHorizontal(board, 70))
-	// we're now reaching the erronious row, so it should now fail
-	assert.False(t, solvers.CheckHorizontal(board, 72))
-	assert.False(t, solvers.CheckHorizontal(board, 77))
-	assert.False(t, solvers.CheckHorizontal(board, 80))
+	check, err := solvers.CheckHorizontal(board, 0)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 1)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 2)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 3)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 4)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 5)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 6)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 7)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 8)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 9)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 10)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 20)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 30)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 40)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 50)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 60)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 70)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 80)
+	assert.False(t, check);
+	assert.Nil(t, err)
+	check, err = solvers.CheckHorizontal(board, 81)
+	assert.False(t, check);
+	assert.Nil(t, err)
 }
 
 func TestExtractHorizontalRow(t *testing.T) {
@@ -157,63 +303,77 @@ func TestExtractHorizontalRow(t *testing.T) {
 
 	expectedRow := []int{0, 0, 3, 0, 2, 0, 6, 0, 0}
 
-	extractedRow := solvers.ExtractHorizontalRow(board, 0)
+	extractedRow, err := solvers.ExtractHorizontalRow(board, 0)
 	assert.Equal(t, expectedRow, extractedRow)
+	assert.Nil(t, err)
 
-	extractedRow = solvers.ExtractHorizontalRow(board, 1)
+	extractedRow, err = solvers.ExtractHorizontalRow(board, 1)
 	assert.Equal(t, expectedRow, extractedRow)
+	assert.Nil(t, err)
 
-	extractedRow = solvers.ExtractHorizontalRow(board, 2)
+	extractedRow, err = solvers.ExtractHorizontalRow(board, 2)
 	assert.Equal(t, expectedRow, extractedRow)
+	assert.Nil(t, err)
 
-	extractedRow = solvers.ExtractHorizontalRow(board, 3)
+	extractedRow, err = solvers.ExtractHorizontalRow(board, 3)
 	assert.Equal(t, expectedRow, extractedRow)
+	assert.Nil(t, err)
 
-	extractedRow = solvers.ExtractHorizontalRow(board, 4)
+	extractedRow, err = solvers.ExtractHorizontalRow(board, 4)
 	assert.Equal(t, expectedRow, extractedRow)
+	assert.Nil(t, err)
 
-	extractedRow = solvers.ExtractHorizontalRow(board, 5)
+	extractedRow, err = solvers.ExtractHorizontalRow(board, 5)
 	assert.Equal(t, expectedRow, extractedRow)
+	assert.Nil(t, err)
 
-	extractedRow = solvers.ExtractHorizontalRow(board, 6)
+	extractedRow, err = solvers.ExtractHorizontalRow(board, 6)
 	assert.Equal(t, expectedRow, extractedRow)
+	assert.Nil(t, err)
 
-	extractedRow = solvers.ExtractHorizontalRow(board, 7)
+	extractedRow, err = solvers.ExtractHorizontalRow(board, 7)
 	assert.Equal(t, expectedRow, extractedRow)
+	assert.Nil(t, err)
 
-	extractedRow = solvers.ExtractHorizontalRow(board, 8)
+	extractedRow, err = solvers.ExtractHorizontalRow(board, 8)
 	assert.Equal(t, expectedRow, extractedRow)
+	assert.Nil(t, err)
 
 	// extract 2nd row
 
 	expectedRow = []int{9, 0, 0, 3, 0, 5, 0, 0, 1}
 
-	extractedRow = solvers.ExtractHorizontalRow(board, 9)
+	extractedRow, err = solvers.ExtractHorizontalRow(board, 9)
 	assert.Equal(t, expectedRow, extractedRow)
+	assert.Nil(t, err)
 
-	extractedRow = solvers.ExtractHorizontalRow(board, 10)
+	extractedRow, err = solvers.ExtractHorizontalRow(board, 10)
 	assert.Equal(t, expectedRow, extractedRow)
+	assert.Nil(t, err)
 
-	extractedRow = solvers.ExtractHorizontalRow(board, 17)
+	extractedRow, err = solvers.ExtractHorizontalRow(board, 17)
 	assert.Equal(t, expectedRow, extractedRow)
+	assert.Nil(t, err)
 
 	// extract 6th row
 
 	expectedRow = []int{0, 0, 6, 7, 0, 8, 2, 0, 0}
 
-	extractedRow = solvers.ExtractHorizontalRow(board, 45)
+	extractedRow, err = solvers.ExtractHorizontalRow(board, 45)
 	assert.Equal(t, expectedRow, extractedRow)
+	assert.Nil(t, err)
 
-	extractedRow = solvers.ExtractHorizontalRow(board, 46)
+	extractedRow, err = solvers.ExtractHorizontalRow(board, 46)
 	assert.Equal(t, expectedRow, extractedRow)
-
+	assert.Nil(t, err)
 	// extract 9th row
 
 	expectedRow = []int{0, 0, 5, 0, 1, 0, 3, 0, 0}
 
-	extractedRow = solvers.ExtractHorizontalRow(board, 72)
+	extractedRow, err = solvers.ExtractHorizontalRow(board, 72)
 	assert.Equal(t, expectedRow, extractedRow)
-
-	extractedRow = solvers.ExtractHorizontalRow(board, 80)
+	assert.Nil(t, err)
+	extractedRow, err = solvers.ExtractHorizontalRow(board, 80)
 	assert.Equal(t, expectedRow, extractedRow)
+	assert.Nil(t, err)
 }

@@ -120,7 +120,8 @@ func TestGetCells(t *testing.T) {
 	var cells []cells.IndividualCell
 	cellsP := &cells
 	for _, initialValue := range easySudoku {
-		cells = append(cells, cellFactory.NewCell(initialValue))
+		newCell, _ := cellFactory.NewCell(initialValue)
+		cells = append(cells, newCell)
 	}
 
 	board, err := boards.NewBoard(cellFactory, easySudoku)
